@@ -20,6 +20,30 @@ export default (configs: Configs) => ({
       get: {
         tags: ['Configs'],
         description: 'Service Heartbeat endpoint',
+        operationId: 'heartbeat',
+        responses: {
+          '200': {
+            description: 'Heartbeat',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  propreties: {
+                    data_backend: {
+                      type: 'string'
+                    },
+                    service: {
+                      type: 'string'
+                    },
+                    status: {
+                      type: 'string',
+                    }
+                  }
+                },
+              },
+            }
+          }
+        }
       },
     },
     '/configs': {
