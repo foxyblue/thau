@@ -2,21 +2,13 @@ import 'mocha'
 import { expect } from 'chai'
 import superagent from 'superagent'
 import * as dotenv from 'dotenv'
+import { NAME, BACKENDS } from './utils'
 
 dotenv.config()
 
 const PUBLIC_RSA_KEY = process.env.PUBLIC_RSA_KEY as string
-
-const sqlite = process.env.AUTH_SQLITE_HOST as string
-const mongo = process.env.AUTH_MONGO_HOST as string
-const postgres = process.env.AUTH_POSTGRES_HOST as string
 const enables_strategies = (process.env.ENABLED_STRATEGIES as string).split(',')
-const BACKENDS = [sqlite, mongo, postgres]
-const NAME = {
-  [sqlite]: 'sqlite',
-  [mongo]: 'mongo',
-  [postgres]: 'postgres',
-} as any
+
 
 describe('Configs endpoints', () => {
   for (const host of BACKENDS) {

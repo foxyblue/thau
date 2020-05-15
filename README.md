@@ -24,19 +24,16 @@ Authentication is always a nightmare. Every time you start a new small pet proje
 
 In order to start the `thau-api` service, you have to provide a list of configurations (such as selected data storage and credentials to access it) as well as login strategies parametres (such as Google Client ID). Here is a simplest example (through it is very configurable):
 ```
-docker run -e ENABLED_STRATEGIES=password -e ENV=local -e PORT=9000 -e DATA_BACKEND=sqlite mgrin/thau
+docker run -e ENABLED_STRATEGIES=password -e ENV=local -e DATA_BACKEND=sqlite mgrin/thau
 ```
 
 Please see related documentations for more information
 
-## Development
+# Idea
+The **Thau** API exchange any of the supported login strategies for a token, that can be exchanged for a user against the same **Thau** API.
 
-You can start 3 instances of **Thau** with 3 different data backends (sqlite, postgres and mongo) by:
-```
-make dev
-```
+No matter what's the strategy you user choose to use, you always get back a token and a user object having the same shape
 
-To run integration tests, you can
-```
-make test
-```
+If you are using **Thau** API with `react-thau`, this token is then stored in `localStorage` or in `Cookies` of your client.
+
+You can still use the **Thau** API without `react-thau`, then the client implementation is on your own responsebility. But the API is still here for you to generate a token for any supported login strategy and to exchange the token for a user object.

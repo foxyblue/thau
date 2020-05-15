@@ -53,7 +53,7 @@ export default () => {
   dotenv.config()
 
   configs.env = (process.env.ENV as string) || configs.env
-  configs.port = parseInt(process.env.PORT as string, 10)
+  configs.port = process.env.PORT as string ? parseInt(process.env.PORT as string, 10) : configs.port
 
   const enabledStrategies = process.env.ENABLED_STRATEGIES as string
   if (!enabledStrategies) {

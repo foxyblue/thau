@@ -3,19 +3,10 @@ import { expect } from 'chai'
 import superagent from 'superagent'
 import * as dotenv from 'dotenv'
 import { encrypt } from './crypto'
+import { NAME, BACKENDS } from './utils'
 
 dotenv.config()
 
-const sqlite = process.env.AUTH_SQLITE_HOST as string
-const mongo = process.env.AUTH_MONGO_HOST as string
-const postgres = process.env.AUTH_POSTGRES_HOST as string
-
-const BACKENDS = [sqlite, mongo, postgres]
-const NAME = {
-  [sqlite]: 'sqlite',
-  [mongo]: 'mongo',
-  [postgres]: 'postgres',
-} as any
 
 describe('Exchange token for user flow', () => {
   for (const host of BACKENDS) {
