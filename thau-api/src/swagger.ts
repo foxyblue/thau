@@ -30,20 +30,20 @@ export default (configs: Configs) => ({
                   type: 'object',
                   propreties: {
                     data_backend: {
-                      type: 'string'
+                      type: 'string',
                     },
                     service: {
-                      type: 'string'
+                      type: 'string',
                     },
                     status: {
                       type: 'string',
-                    }
-                  }
+                    },
+                  },
                 },
               },
-            }
-          }
-        }
+            },
+          },
+        },
       },
     },
     '/configs': {
