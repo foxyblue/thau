@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "start": "node ./build/index.js",
+    "start": "node ./dist/index.js",
     "dev": "ts-node-dev --respawn --transpileOnly ./src/index.ts",
     "lint": "tslint --project tsconfig.json",
     "prettier:check": "prettier --parser typescript --single-quote --list-different \"src/**/*.ts\"",
