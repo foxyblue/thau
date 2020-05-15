@@ -17,7 +17,7 @@ Authentication is always a nightmare. Every time you start a new small pet proje
 **Thau** is written in TypeScript so anyone from your team will be able to work with it's source
 
 # Idea
-![Idea](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+![Idea](https://github.com/MGrin/thau/raw/master/Schema.png)
 
 The **Thau** API exchange any of the supported login strategies for a token, that can be exchanged for a user against the same **Thau** API.
 
