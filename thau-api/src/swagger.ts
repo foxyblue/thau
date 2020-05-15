@@ -16,6 +16,12 @@ export default (configs: Configs) => ({
     },
   },
   paths: {
+    '/heartbeat': {
+      get: {
+        tags: ['Configs'],
+        description: 'Service Heartbeat endpoint',
+      },
+    },
     '/configs': {
       get: {
         tags: ['Configs'],

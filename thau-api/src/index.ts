@@ -40,7 +40,7 @@ const main = async () => {
 
   app.get('/heartbeat', (req, res) => {
     res.send({
-      service: 'auth',
+      service: 'thau',
       data_backend: configs.data_backend,
       status: 'OK',
     })

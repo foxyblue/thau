@@ -15,7 +15,8 @@
             true,
             "log"
         ],
-        "only-arrow-functions": false
+        "only-arrow-functions": false,
+        "no-var-requires": false
     },
     "rulesDirectory": []
 }
