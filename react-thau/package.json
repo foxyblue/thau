@@ -1,7 +1,11 @@
 {
   "name": "react-thau",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "React thau client.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MGrin/thau/tree/master/react-thau"
+  },
   "keywords": [
     "mgr",
     "auth",
