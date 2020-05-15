@@ -1,10 +1,10 @@
 # Thau API
 
-**Thau** API is ran inside the docker. This is done to easy on-premise deployments and development.
+**Thau** API can be ran inside the docker or as a standalone node service.
 
 **Thau** API can be configured using ENV variables. 
 
-**Thau** API is documeneted with swagger
+**Thau** API is documeneted with swagger (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
 
 # Run
 ```
