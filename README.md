@@ -2,6 +2,9 @@
 
 Ready-to-use authentication service for your application. With a React connector.
 
+- [Swagger](https://thau.quester-app.dev/api-docs)
+- Frontend example (Comming soon)
+
 # Motivation
 
 Authentication is always a nightmare. Every time you start a new small pet project, you reimplement the wheel solving a "how to make user login" problem. **Thau** is here for you!

@@ -4,7 +4,7 @@
 
 **Thau** API can be configured using ENV variables. 
 
-**Thau** API is documeneted with swagger (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
+**Thau** API is documeneted with [swagger](https://thau.quester-app.dev/api-docs) (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
 
 # Run
 ```
