@@ -1,0 +1,61 @@
+version: "3.7"
+
+services:
+  thau-sqlite:
+    build:
+      context: ./thau-api
+      target: dev
+    env_file: environments/.env.sqlite
+    volumes:
+      - ./thau-api:/usr/app:ro
+    ports:
+      - 9001:9000
+    networks:
+      - thau-network
+
+  thau-mongo:
+    build:
+      context: ./thau-api
+      target: dev
+    env_file: environments/.env.mongo
+    volumes:
+      - ./thau-api:/usr/app:ro
+    ports:
+      - 9002:9000
+    networks:
+      - thau-network
+
+  thau-postgres:
+    build:
+      context: ./thau-api
+      target: dev
+    env_file: environments/.env.postgres
+    volumes:
+      - ./thau-api:/usr/app:ro
+    ports:
+      - 9003:9000
+    networks:
+      - thau-network
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    networks:
+      - thau-network
+    
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=admin
+    networks:
+      - thau-network
+
+networks:
+  thau-network:
