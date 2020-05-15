@@ -2,7 +2,7 @@
 
 Ready-to-use authentication service for your application. With a React connector.
 
-## Motivation
+# Motivation
 
 Authentication is always a nightmare. Every time you start a new small pet project, you reimplement the wheel solving a "how to make user login" problem. **Thau** is here for you!
 
@@ -16,20 +16,9 @@ Authentication is always a nightmare. Every time you start a new small pet proje
 
 **Thau** is written in TypeScript so anyone from your team will be able to work with it's source
 
-## Usage
-
-**Thau** has 2 parts:
-1. [thau-api](https://github.com/MGrin/thau/blob/master/thau-api/README.md) - backend service that interacts with your data storage and provides an API for your applications to consume.
-2. [react-thau](https://github.com/MGrin/thau/blob/master/react-thau/README.md) - react library that contains all required client-side code to work with `thau-api`.
-
-In order to start the `thau-api` service, you have to provide a list of configurations (such as selected data storage and credentials to access it) as well as login strategies parametres (such as Google Client ID). Here is a simplest example (through it is very configurable):
-```
-docker run -e ENABLED_STRATEGIES=password -e ENV=local -e DATA_BACKEND=sqlite mgrin/thau
-```
-
-Please see related documentations for more information
-
 # Idea
+![Idea](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png)
+
 The **Thau** API exchange any of the supported login strategies for a token, that can be exchanged for a user against the same **Thau** API.
 
 No matter what's the strategy you user choose to use, you always get back a token and a user object having the same shape
@@ -37,3 +26,17 @@ No matter what's the strategy you user choose to use, you always get back a toke
 If you are using **Thau** API with `react-thau`, this token is then stored in `localStorage` or in `Cookies` of your client.
 
 You can still use the **Thau** API without `react-thau`, then the client implementation is on your own responsebility. But the API is still here for you to generate a token for any supported login strategy and to exchange the token for a user object.
+
+# Usage
+
+**Thau** has 2 parts:
+1. [thau-api](https://github.com/MGrin/thau/blob/master/thau-api) - backend service that interacts with your data storage and provides an API for your applications to consume.
+2. [react-thau](https://github.com/MGrin/thau/blob/master/react-thau) - react library that contains all required client-side code to work with `thau-api`.
+
+In order to start the `thau-api` service, you have to provide a list of configurations (such as selected data storage and credentials to access it) as well as login strategies parametres (such as Google Client ID). Here is a simplest example (through it is very configurable):
+```
+docker run -e ENABLED_STRATEGIES=password -e ENV=local -e DATA_BACKEND=sqlite mgrin/thau
+```
+
+Please see related documentations for more information, or the `examples` folder where you can find examples of appliciations
+
