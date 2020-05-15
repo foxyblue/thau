@@ -47,7 +47,11 @@ const main = async () => {
   })
 
   if (configs.swagger) {
-    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(generateSwaggerDocumentation(configs)));
+    app.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(generateSwaggerDocumentation(configs))
+    )
   }
   app.listen(configs.port, () =>
     console.warn(`Auth service started at port ${configs.port}`)
