@@ -1,9 +1,12 @@
 {
   "name": "thau-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "dist/index.js",
-  "author": "MGrin",
-  "license": "MIT",
+  "author": {
+    "name": "MGrin",
+    "email": "mr6r1n@gmail.com"
+  },
+  "license": "GPL-3.0",
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/index.js",
@@ -21,6 +24,7 @@
     "@types/npm": "^2.0.31",
     "@types/pg": "^7.14.3",
     "@types/sqlite3": "^3.1.6",
+    "@types/swagger-ui-express": "^4.1.2",
     "husky": "^4.2.3",
     "prettier": "^1.19.1",
     "ts-node-dev": "^1.0.0-pre.44",
@@ -38,7 +42,8 @@
     "mongodb": "^3.5.7",
     "node-rsa": "^1.0.7",
     "pg": "^8.0.3",
-    "sqlite3": "4.2.0"
+    "sqlite3": "4.2.0",
+    "swagger-ui-express": "^4.1.4"
   },
   "husky": {
     "hooks": {

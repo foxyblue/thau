@@ -3,7 +3,6 @@ import { withCatch, APIError } from './utils'
 import { createToken } from './tokens'
 import { generateSalt, hash, decrypt } from '../crypto'
 import AStorage, { SUPPORTED_STRATEGIES, User } from '../storage/AStorage'
-import { configs } from '../configs'
 
 export const createUser = async (
   storage: AStorage<any>,

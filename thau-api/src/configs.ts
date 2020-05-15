@@ -6,6 +6,7 @@ import { SQLiteStorageConfigs } from './storage/sqlite'
 
 export type Configs = {
   env: string
+  swagger: boolean
   port: number
   supported_strategies: string[]
   data_backend: string
@@ -31,6 +32,7 @@ export type Configs = {
 
 export const configs: Configs = {
   env: 'local',
+  swagger: false,
   port: 9000,
   supported_strategies: [],
   data_backend: 'postgres',
@@ -53,6 +55,8 @@ export default () => {
   dotenv.config()
 
   configs.env = (process.env.ENV as string) || configs.env
+  configs.swagger = Boolean(process.env.SWAGGER)
+
   configs.port = (process.env.PORT as string)
     ? parseInt(process.env.PORT as string, 10)
     : configs.port

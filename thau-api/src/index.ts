@@ -1,6 +1,7 @@
 import express from 'express'
 import helmet from 'helmet'
 import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
 
 import { initStorage } from './storage'
 import TokensAPI from './api/tokens'
@@ -10,6 +11,7 @@ import ConfigsAPI from './api/configs'
 import initConfigs from './configs'
 import initCrypto from './crypto'
 import AStorage from './storage/AStorage'
+import generateSwaggerDocumentation from './swagger'
 
 declare global {
   namespace Express {
@@ -43,6 +45,10 @@ const main = async () => {
       status: 'OK',
     })
   })
+
+  if (configs.swagger) {
+    app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(generateSwaggerDocumentation(configs)));
+  }
   app.listen(configs.port, () =>
     console.warn(`Auth service started at port ${configs.port}`)
   )
