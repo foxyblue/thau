@@ -40,13 +40,13 @@ Example can be seen in [environments/env.sqlite.template](https://github.com/MGr
 * `SQLITE_FILENAME` - **REQUIRED** filename for sqlite DB
 
 ## Configurations for `DATA_BACKEND=mongo`:
-Example can be seen in [environments/env.sqlite.template](https://github.com/MGrin/thau/blob/master/environments/env.mongo.template)
+Example can be seen in [environments/env.mongo.template](https://github.com/MGrin/thau/blob/master/environments/env.mongo.template)
 
 * `MONGO_URL` - **REQUIRED** url to connect to MongoDB
 * `MONGO_CLIENT_OPTIONS` - a JSON value with MongoClient parameters that will be passed to the client constructor. Documentation of the shape of these parameters: [http://mongodb.github.io/node-mongodb-native/3.6/api/MongoClient.html#.connect](http://mongodb.github.io/node-mongodb-native/3.6/api/MongoClient.html#.connect)
 
 ## Configurations for `DATA_BACKEND=postgres`:
-Example can be seen in [environments/env.sqlite.template](https://github.com/MGrin/thau/blob/master/environments/env.postgres.template)
+Example can be seen in [environments/env.postgres.template](https://github.com/MGrin/thau/blob/master/environments/env.postgres.template)
 
 * `PG_HOST` - **REQUIRED** Postgres host
 * `PG_PORT` - Postgres port. Default `5432`
