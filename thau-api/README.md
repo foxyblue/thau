@@ -7,13 +7,21 @@
 **Thau** API is documeneted with [swagger](https://thau.quester-app.dev/api-docs) (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
 
 # Run
+As a docker image:
 ```
 docker run -env-file .env mgrin/thau
 ```
 
-Note that in the example below we pass the `.env` file with all needed environment variables.
+As a standalone node service:
+```
+npm install
+npm run build
+npm start
+```
 
-The siimplest example of such file:
+Note that in both examples above we pass the `.env` file with all needed environment variables.
+
+The simplest example of such file:
 ```
 ENV=local
 ENABLED_STRATEGIES=password
