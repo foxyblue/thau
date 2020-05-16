@@ -2,15 +2,13 @@ import 'mocha'
 import { expect } from 'chai'
 import superagent from 'superagent'
 import * as dotenv from 'dotenv'
-import { encrypt } from './crypto'
 import { NAME, BACKENDS } from './utils'
 
 dotenv.config()
 
-
 describe('Exchange token for user flow', () => {
   for (const host of BACKENDS) {
-    let USER_TOKEN_NEW: string
+    const USER_TOKEN_NEW: string | undefined = undefined
     let USER_TOKEN: string
     let USER: any
 
@@ -23,7 +21,7 @@ describe('Exchange token for user flow', () => {
           firstName: 'First name',
           lastName: 'Last name',
           dateOfBirth: Date.now(),
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response
@@ -44,7 +42,9 @@ describe('Exchange token for user flow', () => {
       } finally {
         expect(res.status).to.equal(200)
         expect(res.body.user.id).to.not.equal(null)
-        expect(res.body.user.email).to.equal(`test.user@${host}.revoke.token.flow`)
+        expect(res.body.user.email).to.equal(
+          `test.user@${host}.revoke.token.flow`
+        )
         USER = res.body.user
       }
     })

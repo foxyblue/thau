@@ -9,7 +9,6 @@ import UsersAPI from './api/users'
 import ConfigsAPI from './api/configs'
 
 import initConfigs from './configs'
-import initCrypto from './crypto'
 import AStorage from './storage/AStorage'
 import generateSwaggerDocumentation from './swagger'
 
@@ -23,7 +22,6 @@ declare global {
 const main = async () => {
   const configs = initConfigs()
   const storage = await initStorage(configs)
-  initCrypto(configs)
 
   const app = express()
   app.use((req, res, next) => {

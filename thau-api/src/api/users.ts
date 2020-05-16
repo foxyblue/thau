@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express'
 import { withCatch, APIError } from './utils'
 import { createToken } from './tokens'
-import { generateSalt, hash, decrypt } from '../crypto'
+import { generateSalt, hash } from '../crypto'
 import AStorage, { SUPPORTED_STRATEGIES, User } from '../storage/AStorage'
 
 export const createUser = async (
@@ -56,7 +56,7 @@ const handleCreateUser = async (req: Request, res: Response) => {
   let hashedPassword
 
   try {
-    clearPassword = decrypt(req.body.password)
+    clearPassword = req.body.password
     salt = generateSalt()
     hashedPassword = hash(clearPassword, salt)
   } catch {

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { APIError } from '../utils'
 import { SUPPORTED_STRATEGIES } from '../../storage/AStorage'
-import { decrypt, hash } from '../../crypto'
+import { hash } from '../../crypto'
 import { createToken } from '../tokens'
 
 const handleExchangePasswordForToken = async (req: Request, res: Response) => {
@@ -33,7 +33,7 @@ const handleExchangePasswordForToken = async (req: Request, res: Response) => {
   let hashedPassword
 
   try {
-    clearPassword = decrypt(password)
+    clearPassword = password
     hashedPassword = hash(clearPassword, credentials.salt)
   } catch {
     throw new APIError('Password can not be decrypted', 400)

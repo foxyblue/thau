@@ -2,7 +2,6 @@ import 'mocha'
 import { expect } from 'chai'
 import superagent from 'superagent'
 import * as dotenv from 'dotenv'
-import { encrypt } from './crypto'
 import { NAME, BACKENDS } from './utils'
 
 dotenv.config()
@@ -63,7 +62,7 @@ describe('Create user', () => {
       }
     })
 
-    it(`[${NAME[host]}]: Should not create user with wrongly encrypted password`, async () => {
+    it.skip(`[${NAME[host]}]: Should not create user with wrongly encrypted password`, async () => {
       let res
       try {
         res = await superagent.post(`${host}/users`).send({
@@ -90,7 +89,7 @@ describe('Create user', () => {
           res = await superagent.post(`${host}/users`).send({
             email: 'test.test@test.test',
             username: 'test',
-            password: encrypt(password),
+            password,
           })
         } catch (err) {
           res = err
@@ -113,7 +112,7 @@ describe('Create user', () => {
           firstName: 'First name',
           lastName: 'Last name',
           dateOfBirth: DOB.getTime(),
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response
@@ -167,7 +166,7 @@ describe('Create user', () => {
           firstName: 'First name',
           lastName: 'Last name',
           dateOfBirth: Date.now(),
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response

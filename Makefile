@@ -10,9 +10,10 @@ dev: build
 	docker-compose up -d
 	docker-compose ps
 format:
-	cd thau-api && yarn prettier:write
-	cd react-thau && yarn prettier:write
-	cd tests && yarn prettier:write
+	cd thau-api && yarn prettier:write && yarn lint
+	cd react-thau && yarn prettier:write && yarn lint
+	cd tests && yarn prettier:write && yarn lint
+	cd examples/react-thau && yarn prettier:write && yarn lint
 
 test: dev
 	docker build -t thau-tests -f tests/Dockerfile tests/

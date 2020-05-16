@@ -7,7 +7,6 @@ const ConfigsAPI = Router()
 const handleGetConfigs = async (req: Request, res: Response) => {
   const publicConfigs = {
     strategies: configs.supported_strategies,
-    key: configs.crypto.public_key_base64,
   } as any
 
   if (configs.google) {

@@ -14,5 +14,6 @@ export const withCatch = (
 ) => (req: Request, res: Response) =>
   handler(req, res).catch(e => {
     const apiError = new APIError(e.message, e.status)
+    console.error(e)
     return res.status(apiError.status).send(apiError)
   })

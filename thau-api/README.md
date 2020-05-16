@@ -37,8 +37,6 @@ See next section to know more about configuration options
 * `ENV` - **REQUIRED** the name of environment the service is running.
 * `DATA_BACKEND` - **REQUIRED** the data storage type. Possible values: `sqlite`, `postgres`, `mongo`
 * `ENABLED_STRATEGIES` - **REQUIRED** commma-separated list of enabled login strategies. Possible values: `password`, `google`, `facebook`
-* `PUBLIC_RSA_KEY` - Public RSA key in base64 encoding. Is served over API and is used to encrypt free-text password sent from the client
-* `PRIVATE_RSA_KEY` - Private RSA key in base64 encoding. Used to decrypt the password
 
 For every `DATA_BACKEND` and login strategy you have to provide additional variables. The **REQUIRED** now means that it's requuired only if a given data storage or a given login strategy is used:
 

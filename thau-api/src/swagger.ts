@@ -69,8 +69,7 @@ export default (configs: Configs) => ({
     '/users': {
       post: {
         tags: ['Users'],
-        description:
-          'Create new user with password. Note that the password should be encrypted!',
+        description: 'Create new user with password',
         operationId: 'createUser',
         requestBody: {
           description: 'User information',
@@ -86,7 +85,7 @@ export default (configs: Configs) => ({
                       password: {
                         type: 'string',
                         requiried: true,
-                        description: 'Encrypted password',
+                        description: 'Password',
                       },
                     },
                   },
@@ -210,7 +209,7 @@ export default (configs: Configs) => ({
                       password: {
                         type: 'string',
                         requiried: true,
-                        description: 'Encrypted password',
+                        description: 'Password',
                       },
                     },
                   },
@@ -333,9 +332,6 @@ export default (configs: Configs) => ({
             items: {
               type: 'string',
             },
-          },
-          key: {
-            type: 'string',
           },
           google: {
             type: 'object',

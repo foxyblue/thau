@@ -10,10 +10,6 @@ export type Configs = {
   port: number
   supported_strategies: string[]
   data_backend: string
-  crypto: {
-    private_key_base64?: string
-    public_key_base64?: string
-  }
   token_lifetime: number
 
   sqlite: SQLiteStorageConfigs
@@ -36,7 +32,6 @@ export const configs: Configs = {
   port: 9000,
   supported_strategies: [],
   data_backend: 'postgres',
-  crypto: {},
   token_lifetime: 1000 * 60 * 60 * 24 * 10,
   sqlite: {
     filename: ':memory',
@@ -109,8 +104,6 @@ export default () => {
     }
   }
 
-  configs.crypto.private_key_base64 = process.env.PRIVATE_RSA_KEY as string
-  configs.crypto.public_key_base64 = process.env.PUBLIC_RSA_KEY as string
   configs.token_lifetime = process.env.TOKEN_LIFETIME
     ? parseInt(process.env.TOKEN_LIFETIME as string, 10)
     : configs.token_lifetime

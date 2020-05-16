@@ -2,7 +2,6 @@ import 'mocha'
 import { expect } from 'chai'
 import superagent from 'superagent'
 import * as dotenv from 'dotenv'
-import { encrypt } from './crypto'
 import { NAME, BACKENDS } from './utils'
 
 dotenv.config()
@@ -22,7 +21,7 @@ describe('Exchange token for user flow', () => {
           firstName: 'First name',
           lastName: 'Last name',
           dateOfBirth: Date.now(),
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response
@@ -55,7 +54,7 @@ describe('Exchange token for user flow', () => {
       try {
         res = await superagent.post(`${host}/tokens/password`).send({
           email: 'test.test@test.test',
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response
@@ -68,7 +67,7 @@ describe('Exchange token for user flow', () => {
       }
     })
 
-    it(`[${NAME[host]}]: Should not get token for unencrypted password`, async () => {
+    it.skip(`[${NAME[host]}]: Should not get token for unencrypted password`, async () => {
       let res
       try {
         res = await superagent.post(`${host}/tokens/password`).send({
@@ -91,7 +90,7 @@ describe('Exchange token for user flow', () => {
       try {
         res = await superagent.post(`${host}/tokens/password`).send({
           email: `test.user@${host}.password.for.token.flow`,
-          password: encrypt('WRONG PASSWORD HERE'),
+          password: 'WRONG PASSWORD HERE',
         })
       } catch (err) {
         res = err.response
@@ -109,7 +108,7 @@ describe('Exchange token for user flow', () => {
       try {
         res = await superagent.post(`${host}/tokens/password`).send({
           email: `test.user@${host}.password.for.token.flow`,
-          password: encrypt('PaSsWoRd'),
+          password: 'PaSsWoRd',
         })
       } catch (err) {
         res = err.response
