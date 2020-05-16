@@ -1,4 +1,5 @@
 # Thau
+<img src="https://www.netclipart.com/pp/m/29-293197_clip-art-free-stock-tau-greek-alphabet-letter.png" data-canonical-src="https://www.netclipart.com/pp/m/29-293197_clip-art-free-stock-tau-greek-alphabet-letter.png" width="250" />
 
 Ready-to-use authentication service for your application. With a React connector.
 
