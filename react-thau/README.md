@@ -48,7 +48,7 @@ And now down in the tree you can use any of the available exported hooks (see do
 * `useLogout()`
 * `useUser()`
 
-# Documnetation
+# Documentation
 
 ## AuthProvider
 Wrapper component. Is required to pass the context value to hooks. Takes following props:
