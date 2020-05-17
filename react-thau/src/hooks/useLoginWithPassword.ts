@@ -31,13 +31,6 @@ const loginWithPassword = async (
     ...credentials,
   } as typeof credentials & { password_encrypted: string }
 
-  if (formattedCredentials.password && auth.publicKey) {
-    formattedCredentials.password = auth.publicKey.encrypt(
-      formattedCredentials.password,
-      'base64'
-    )
-  }
-
   try {
     const { token, user } = await loginWith(
       'password',

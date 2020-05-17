@@ -1,4 +1,4 @@
-import * as thau from '../'
+import * as thau from '..'
 
 const EXPECTED_EXPORT = [
   'AuthProvider',

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import NodeRSA from 'node-rsa'
 import { authContext, AuthContextType } from './context'
 import { FetchOptions, User, Config } from './types'
 import { getToken, setToken, generateFacebookInitScript } from './utils'
@@ -9,7 +8,6 @@ const initialState: State = {
   loading: true,
   error: null,
   availableStrategies: null,
-  publicKey: null,
   tokenStorage: 'localStorage',
   user: undefined,
   provider: undefined,
@@ -137,26 +135,15 @@ const reducer: React.Reducer<State, Action> = (state, action) => {
         loading: false,
         error: action.error,
         availableStrategies: null,
-        publicKey: null,
         user: undefined,
       }
     }
 
     case 'CONFIGS_SUCCESS': {
-      let key: NodeRSA | null = null
-      if (action.publicKey) {
-        key = new NodeRSA()
-        key.importKey(
-          Buffer.from(action.publicKey, 'base64').toString('utf-8'),
-          'public'
-        )
-      }
-
       return {
         ...state,
         error: null,
         availableStrategies: action.strategies,
-        publicKey: key,
         google: action.google,
         facebook: action.facebook,
       }

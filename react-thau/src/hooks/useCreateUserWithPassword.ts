@@ -42,12 +42,6 @@ const createUserWithPassword = async (
         10
       )
     }
-    if (formattedUserInfo.password && auth.publicKey) {
-      formattedUserInfo.password = auth.publicKey.encrypt(
-        formattedUserInfo.password,
-        'base64'
-      )
-    }
 
     const response = await fetch(`${auth.authUrl}/users`, {
       method: 'POST',
