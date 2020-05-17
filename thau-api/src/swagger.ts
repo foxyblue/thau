@@ -174,7 +174,7 @@ export default (configs: Configs) => ({
         },
       },
     },
-    '/token/{strategy}': {
+    '/tokens/{strategy}': {
       post: {
         tags: ['Tokens'],
         description:
