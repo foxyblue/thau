@@ -238,6 +238,23 @@ export default (configs: Configs) => ({
             },
           },
         },
+        responses: {
+          200: {
+            description: 'Success',
+            content: {
+              'application/json': {
+                schema: {
+                  type: 'object',
+                  properties: {
+                    token: {
+                      type: 'string',
+                    },
+                  },
+                },
+              },
+            },
+          },
+        }
       },
     },
     '/tokens/user': {
