@@ -254,7 +254,7 @@ export default (configs: Configs) => ({
               },
             },
           },
-        }
+        },
       },
     },
     '/tokens/user': {
