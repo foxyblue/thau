@@ -1,10 +1,10 @@
 # Thau
-<img src="https://www.netclipart.com/pp/m/29-293197_clip-art-free-stock-tau-greek-alphabet-letter.png" data-canonical-src="https://www.netclipart.com/pp/m/29-293197_clip-art-free-stock-tau-greek-alphabet-letter.png" width="250" />
+<img src="https://github.com/MGrin/thau/raw/master/thau.png" width="250" />
 
 Ready-to-use authentication service for your application. With a React connector.
 
 - [Swagger](https://thau.quester-app.dev/api-docs)
-- Frontend example (Comming soon)
+- [React integration documentation and examples](https://github.com/MGrin/thau/tree/master/react-thau)
 
 # Motivation
 
