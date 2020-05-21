@@ -74,6 +74,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Push the Docker image
       run: |
+        echo "LOGIN TO DOCKER HUB"
+        dockeer login -u mgrin -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
         echo "BUILDING THE IMAGE"
         cd thau-api
         docker build --target prod --tag mgrin/thau:latest .
