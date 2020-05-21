@@ -9,7 +9,7 @@ on:
     paths:
       - thau-api/**
       - tests/**
-      - .github/workflows/thau-api.yml
+      - .github/workflows/**
       - docker-compose.ci.yaml
 
 jobs:
@@ -46,14 +46,13 @@ jobs:
         docker build --target prod --tag mgrin/thau:$GITHUB_SHA .
         cd ../
 
-        echo "BUILDING TESTS IMAGE"
-        docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
-
         echo "RUNNING docker-compose.ci"
         docker-compose -f docker-compose.ci.yaml up -d
         docker-compose -f docker-compose.ci.yaml ps
 
-        sleep 10
+        echo "BUILDING TESTS IMAGE"
+        docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
+
         echo "RUNNING TESTS"
         docker run \
           --network=thau_thau-network \
