@@ -1,0 +1,31 @@
+name: Build and test Thau API
+
+on:
+  push:
+    paths:
+      - thau-api/**
+    branches: [ master ]
+  pull_request:
+    paths:
+      - thau-api/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      run: |
+        cd thau-api
+        docker build --target prod --tag mgrin/thau:$GITHUB_SHA .
+        cd ../tests
+        docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
+        cd ../
+        docker-compose build -f docker-compose.ci.yaml
+        docker-compose up -f docker-compose.ci.yaml
+        docker-compose ps
+        docker run \
+          --network=thau_thau-network \
+          --env-file ./environments/.env.tests \
+          -e "TERM=xterm-256color" \
+          thau-tests
