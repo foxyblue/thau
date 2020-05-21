@@ -9,6 +9,7 @@ on:
     paths:
       - thau-api/**
       - tests/**
+      - .gitthub/workflows/thau-api.yml
 
 jobs:
   lint:
@@ -46,9 +47,6 @@ jobs:
 
         echo "BUILDING TESTS IMAGE"
         docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
-
-        echo "BUILDING docker-compose.ci"
-        docker-compose build -f docker-compose.ci.yaml
 
         echo "RUNNING docker-compose.ci"
         docker-compose up -f docker-compose.ci.yaml
