@@ -19,6 +19,7 @@ declare global {
     }
   }
 }
+
 const main = async () => {
   const configs = initConfigs()
   const storage = await initStorage(configs)
