@@ -49,8 +49,8 @@ jobs:
         docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
 
         echo "RUNNING docker-compose.ci"
-        docker-compose up -f docker-compose.ci.yaml
-        docker-compose ps
+        docker-compose -f docker-compose.ci.yaml up 
+        docker-compose -f docker-compose.ci.yaml ps
 
         echo "RUNNING TESTS"
         docker run \
