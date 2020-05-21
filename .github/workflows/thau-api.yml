@@ -4,12 +4,15 @@ on:
   push:
     paths:
       - thau-api/**
+      - tests/**
+      - .github/workflows/thau-api.yml
+      - docker-compose.ci.yaml
     branches: [ master ]
   pull_request:
     paths:
       - thau-api/**
       - tests/**
-      - .github/workflows/**
+      - .github/workflows/thau-api.yml
       - docker-compose.ci.yaml
 
 jobs:
