@@ -9,6 +9,7 @@ build: stop
 dev: build
 	docker-compose up -d
 	docker-compose ps
+
 format:
 	cd thau-api && yarn prettier:write && yarn lint
 	cd react-thau && yarn prettier:write && yarn lint

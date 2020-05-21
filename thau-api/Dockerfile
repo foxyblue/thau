@@ -15,8 +15,6 @@ CMD [ "yarn", "dev" ]
 
 FROM base as prod
 
-RUN yarn lint
-RUN yarn prettier:check
 RUN yarn build
 
 EXPOSE 9000
