@@ -50,18 +50,19 @@ jobs:
         docker build -t mgrin/thau-tests:$GITHUB_SHA -f tests/Dockerfile tests/
 
         echo "RUNNING docker-compose.ci"
-        docker-compose -f docker-compose.ci.yaml up 
+        docker-compose -f docker-compose.ci.yaml up -d
         docker-compose -f docker-compose.ci.yaml ps
 
+        sleep 10
         echo "RUNNING TESTS"
         docker run \
           --network=thau_thau-network \
           -e AUTH_SQLITE_HOST=thau-sqlite:9000 \
           -e AUTH_MONGO_HOST=thau-mongo:9000 \
           -e AUTH_POSTGRES_HOST=thau-postgres:9000 \
-          -e ENABLED_STRATEGIES=password,google,facebook \
+          -e ENABLED_STRATEGIES=password \
           -e "TERM=xterm-256color" \
-          thau-tests
+          mgrin/thau-tests:$GITHUB_SHA
 
   build-and-push:
     runs-on: ubuntu-latest
