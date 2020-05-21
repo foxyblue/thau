@@ -3,9 +3,11 @@ version: "3.7"
 services:
   thau-sqlite:
     image: mgrin/thau:${GITHUB_SHA:-latest}
-    env_file: environments/.env.sqlite
-    volumes:
-      - ./thau-api:/usr/app:ro
+    environment:
+      - ENV=test
+      - DATA_BACKEND=sqlite
+      - SQLITE_FILENAME=db
+      - ENABLED_STRATEGIES=password
     ports:
       - 9001:9000
     networks:
@@ -13,9 +15,11 @@ services:
 
   thau-mongo:
     image: mgrin/thau:${GITHUB_SHA:-latest}
-    env_file: environments/.env.mongo
-    volumes:
-      - ./thau-api:/usr/app:ro
+    environment:
+      - ENV=test
+      - DATA_BACKEND=mongo
+      - MONGO_URL=mongodb://admin:password@mongo:27017
+      - ENABLED_STRATEGIES=password
     ports:
       - 9002:9000
     networks:
@@ -23,9 +27,12 @@ services:
 
   thau-postgres:
     image: mgrin/thau:${GITHUB_SHA:-latest}
-    env_file: environments/.env.postgres
-    volumes:
-      - ./thau-api:/usr/app:ro
+    environment:
+      - ENV=test
+      - PG_HOST=postgres
+      - PG_USER=admin
+      - PG_PASSWORD=password
+      - ENABLED_STRATEGIES=password
     ports:
       - 9003:9000
     networks:

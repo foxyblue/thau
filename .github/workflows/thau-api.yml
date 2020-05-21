@@ -9,7 +9,8 @@ on:
     paths:
       - thau-api/**
       - tests/**
-      - .gitthub/workflows/thau-api.yml
+      - .github/workflows/thau-api.yml
+      - docker-compose.ci.yaml
 
 jobs:
   lint:
@@ -55,7 +56,10 @@ jobs:
         echo "RUNNING TESTS"
         docker run \
           --network=thau_thau-network \
-          --env-file ./environments/.env.tests \
+          -e AUTH_SQLITE_HOST=thau-sqlite:9000 \
+          -e AUTH_MONGO_HOST=thau-mongo:9000 \
+          -e AUTH_POSTGRES_HOST=thau-postgres:9000 \
+          -e ENABLED_STRATEGIES=password,google,facebook \
           -e "TERM=xterm-256color" \
           thau-tests
 
