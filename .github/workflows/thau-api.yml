@@ -59,9 +59,7 @@ jobs:
         echo "RUNNING TESTS"
         docker run \
           --network=thau_thau-network \
-          -e AUTH_SQLITE_HOST=thau-sqlite:9000 \
-          -e AUTH_MONGO_HOST=thau-mongo:9000 \
-          -e AUTH_POSTGRES_HOST=thau-postgres:9000 \
+          -e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres \
           -e ENABLED_STRATEGIES=password \
           -e "TERM=xterm-256color" \
           mgrin/thau-tests:$GITHUB_SHA
