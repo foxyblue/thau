@@ -37,7 +37,7 @@ const main = async () => {
   app.use('/users', UsersAPI)
   app.use('/configs', ConfigsAPI)
 
-  app.get('/heartbeat', (r, res) => {
+  app.get('/heartbeat', (req, res) => {
     res.send({
       service: 'thau',
       data_backend: configs.data_backend,
