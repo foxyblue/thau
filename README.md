@@ -1,6 +1,8 @@
 # Thau
 <img src="https://github.com/MGrin/thau/raw/master/thau.png" width="250" />
 
+[Medium article](https://medium.com/@mgrin/thau-an-ultimate-authentication-service-with-react-connector-1412dcaa835e?source=friends_link&sk=d802e4eb4b78d3213af2f09b6c5c8eec)
+
 Ready-to-use authentication service for your application. With a React connector.
 
 - [Swagger](https://thau.quester-app.dev/api-docs)
