@@ -25,18 +25,20 @@ services:
     networks:
       - thau-network
 
-  # thau-postgres:
-  #   image: mgrin/thau:${GITHUB_SHA:-latest}
-  #   environment:
-  #     - ENV=test
-  #     - PG_HOST=postgres
-  #     - PG_USER=admin
-  #     - PG_PASSWORD=password
-  #     - ENABLED_STRATEGIES=password
-  #   ports:
-  #     - 9003:9000
-  #   networks:
-  #     - thau-network
+  thau-postgres:
+    image: mgrin/thau:${GITHUB_SHA:-latest}
+    environment:
+      - ENV=test
+      - DATA_BACKEND=postgres
+      - PG_HOST=postgres
+      - PG_USER=admin
+      - PG_PASSWORD=password
+      - ENABLED_STRATEGIES=password
+    ports:
+      - 9003:9000
+    command: sh -c "sleep 5 && yarn start"
+    networks:
+      - thau-network
 
   mongo:
     image: mongo:latest
@@ -46,13 +48,13 @@ services:
     networks:
       - thau-network
     
-  # postgres:
-  #   image: postgres:latest
-  #   environment:
-  #     - POSTGRES_PASSWORD=password
-  #     - POSTGRES_USER=admin
-  #   networks:
-  #     - thau-network
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=admin
+    networks:
+      - thau-network
 
 networks:
   thau-network:
