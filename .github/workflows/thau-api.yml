@@ -47,7 +47,6 @@ jobs:
         cd ../
 
         echo "RUNNING docker-compose.ci"
-        sleep 10
         docker-compose -f docker-compose.ci.yaml up -d
         docker-compose -f docker-compose.ci.yaml ps
 
