@@ -42,7 +42,7 @@ export const configs: Configs = {
     users: 'USERS',
     userTokenPairs: 'USER_TOKEN_PAIRS',
     credentials: 'CREDENTIALS',
-    userProviders: 'USER_PROVIDERS'
+    userProviders: 'USER_PROVIDERS',
   },
   token_lifetime: 1000 * 60 * 60 * 24 * 10,
   sqlite: {
@@ -117,10 +117,17 @@ export default () => {
   }
 
   configs.table_names = {
-    users: process.env.USERS_TABLE_NAME as string || configs.table_names.users,
-    userTokenPairs: process.env.USER_TOKEN_PAIRS_TABLE_NAME as string || configs.table_names.userTokenPairs,
-    credentials: process.env.CREDENTIALS_TABLE_NAME as string || configs.table_names.credentials,
-    userProviders: process.env.USER_PROVIDERS_TABLE_NAME as string || configs.table_names.userProviders,
+    users:
+      (process.env.USERS_TABLE_NAME as string) || configs.table_names.users,
+    userTokenPairs:
+      (process.env.USER_TOKEN_PAIRS_TABLE_NAME as string) ||
+      configs.table_names.userTokenPairs,
+    credentials:
+      (process.env.CREDENTIALS_TABLE_NAME as string) ||
+      configs.table_names.credentials,
+    userProviders:
+      (process.env.USER_PROVIDERS_TABLE_NAME as string) ||
+      configs.table_names.userProviders,
   }
   configs.token_lifetime = process.env.TOKEN_LIFETIME
     ? parseInt(process.env.TOKEN_LIFETIME as string, 10)

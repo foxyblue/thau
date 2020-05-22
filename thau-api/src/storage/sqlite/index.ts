@@ -112,7 +112,9 @@ export default class SQLiteStorage extends AStorage<number> {
               [creatdId, provider, JSON.stringify(providerData)],
               err => {
                 if (err) {
-                  db.run(`DELETE FROM ${tableNames.users} WHERE id = ?`, [creatdId])
+                  db.run(`DELETE FROM ${tableNames.users} WHERE id = ?`, [
+                    creatdId,
+                  ])
                   return reject(err)
                 }
               }

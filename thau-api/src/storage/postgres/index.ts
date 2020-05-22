@@ -21,7 +21,11 @@ export type PostgresStorageConfigs = {
 
 export default class PostgresStorage extends AStorage<number> {
   private pool: Pool
-  public constructor(tokenLifetime: number, tableNames: typeof configs.table_names, pgConfigs: PostgresStorageConfigs) {
+  public constructor(
+    tokenLifetime: number,
+    tableNames: typeof configs.table_names,
+    pgConfigs: PostgresStorageConfigs
+  ) {
     super(tokenLifetime, tableNames)
     this.pool = new Pool(pgConfigs)
   }
