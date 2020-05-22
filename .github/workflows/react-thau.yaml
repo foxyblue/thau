@@ -4,12 +4,12 @@ on:
   push:
     paths:
       - react-thau/**
-      - .github/workflows/react-thau.yml
+      - .github/workflows/react-thau.yaml
     branches: [ master ]
   pull_request:
     paths:
       - react-thau/**
-      - .github/workflows/react-thau.yml
+      - .github/workflows/react-thau.yaml
 
 jobs:
   lint-and-build:
