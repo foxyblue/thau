@@ -17,6 +17,7 @@ format:
 	cd examples/react-thau && yarn prettier:write && yarn lint
 
 test: dev
+	sleep 5
 	docker build -t thau-tests -f tests/Dockerfile tests/
 	docker run \
 		--network=thau_thau-network \
