@@ -47,4 +47,5 @@ jobs:
           cd react-thau
           yarn
           yarn build
-          yarn publish --tag beta
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          npm publish --tag beta
