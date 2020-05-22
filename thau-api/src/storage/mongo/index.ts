@@ -5,6 +5,7 @@ import AStorage, {
   UserTokenPair,
 } from '../AStorage'
 import { ObjectID, MongoClientOptions, MongoClient } from 'mongodb'
+import { configs } from '../../configs'
 
 export type MongoStorageConfigs = MongoClientOptions & {
   url: string
@@ -14,9 +15,10 @@ export default class MongoStorage extends AStorage<ObjectID> {
   private client: MongoClient
   public constructor(
     tokenLifetime: number,
+    tableNames: typeof configs.table_names,
     { url, ...options }: MongoStorageConfigs
   ) {
-    super(tokenLifetime)
+    super(tokenLifetime, tableNames)
     this.client = new MongoClient(url, options)
   }
 
@@ -38,7 +40,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   ): Promise<User<ObjectID>> {
     const userInsertResult = await this.client
       .db()
-      .collection('Users')
+      .collection(this.tableNames.users)
       .insertOne({
         ...userInfo,
         date_of_birth: userInfo.date_of_birth
@@ -47,7 +49,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
       })
     await this.client
       .db()
-      .collection('UserProviders')
+      .collection(this.tableNames.userProviders)
       .insertOne({
         user_id: userInsertResult.insertedId,
         providers: {
@@ -57,7 +59,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
 
     const user = await this.client
       .db()
-      .collection('Users')
+      .collection(this.tableNames.users)
       .findOne({ _id: userInsertResult.insertedId })
     user.id = user._id
     delete user._id
@@ -75,7 +77,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   ): Promise<Credentials<ObjectID>> {
     const credentialsInsertResult = await this.client
       .db()
-      .collection('Credentials')
+      .collection(this.tableNames.credentials)
       .insertOne({
         user_id: new ObjectID(userId),
         email,
@@ -88,7 +90,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
 
     const credentials = await this.client
       .db()
-      .collection('Credentials')
+      .collection(this.tableNames.credentials)
       .findOne({
         _id: credentialsInsertResult.insertedId,
       })
@@ -104,7 +106,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   ): Promise<UserTokenPair<ObjectID>> {
     await this.client
       .db()
-      .collection('UserTokenPairs')
+      .collection(this.tableNames.userTokenPairs)
       .update(
         {
           user_id: new ObjectID(userId),
@@ -117,7 +119,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
 
     const userTokenPairInsertResult = await this.client
       .db()
-      .collection('UserTokenPairs')
+      .collection(this.tableNames.userTokenPairs)
       .insertOne({
         user_id: new ObjectID(userId),
         token,
@@ -129,7 +131,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
 
     const userTokenPair = await this.client
       .db()
-      .collection('UserTokenPairs')
+      .collection(this.tableNames.userTokenPairs)
       .findOne({
         _id: userTokenPairInsertResult.insertedId,
       })
@@ -145,7 +147,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   ): Promise<Credentials<ObjectID>> {
     const credentials = await this.client
       .db()
-      .collection('Credentials')
+      .collection(this.tableNames.credentials)
       .findOne({ email, strategy })
     if (!credentials) {
       return credentials
@@ -161,7 +163,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   ): Promise<UserTokenPair<ObjectID>> {
     const userTokenPair = await this.client
       .db()
-      .collection('UserTokenPairs')
+      .collection(this.tableNames.userTokenPairs)
       .findOne({
         token,
         created: { $gt: new Date(Date.now() - this.tokenLifetime) },
@@ -180,7 +182,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   public async getUserById(userId: ObjectID): Promise<User<ObjectID>> {
     const user = await this.client
       .db()
-      .collection('Users')
+      .collection(this.tableNames.users)
       .findOne({ _id: new ObjectID(userId) })
 
     if (!user) {
@@ -198,7 +200,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   public async getUserByEmail(email: string): Promise<User<ObjectID>> {
     const user = await this.client
       .db()
-      .collection('Users')
+      .collection(this.tableNames.users)
       .findOne({ email })
     if (!user) {
       return user
@@ -221,7 +223,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   public async revokeToken(token: string): Promise<void> {
     await this.client
       .db()
-      .collection('UserTokenPairs')
+      .collection(this.tableNames.userTokenPairs)
       .findOneAndUpdate(
         {
           token,

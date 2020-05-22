@@ -10,6 +10,12 @@ export type Configs = {
   port: number
   supported_strategies: string[]
   data_backend: string
+  table_names: {
+    users: string
+    userTokenPairs: string
+    credentials: string
+    userProviders: string
+  }
   token_lifetime: number
 
   sqlite: SQLiteStorageConfigs
@@ -32,6 +38,12 @@ export const configs: Configs = {
   port: 9000,
   supported_strategies: [],
   data_backend: 'postgres',
+  table_names: {
+    users: 'USERS',
+    userTokenPairs: 'USER_TOKEN_PAIRS',
+    credentials: 'CREDENTIALS',
+    userProviders: 'USER_PROVIDERS'
+  },
   token_lifetime: 1000 * 60 * 60 * 24 * 10,
   sqlite: {
     filename: ':memory',
@@ -104,6 +116,12 @@ export default () => {
     }
   }
 
+  configs.table_names = {
+    users: process.env.USERS_TABLE_NAME as string || configs.table_names.users,
+    userTokenPairs: process.env.USER_TOKEN_PAIRS_TABLE_NAME as string || configs.table_names.userTokenPairs,
+    credentials: process.env.CREDENTIALS_TABLE_NAME as string || configs.table_names.credentials,
+    userProviders: process.env.USER_PROVIDERS_TABLE_NAME as string || configs.table_names.userProviders,
+  }
   configs.token_lifetime = process.env.TOKEN_LIFETIME
     ? parseInt(process.env.TOKEN_LIFETIME as string, 10)
     : configs.token_lifetime

@@ -6,6 +6,7 @@ import AStorage, {
   UserTokenPair,
 } from '../AStorage'
 import createSchema from './createSchema'
+import { configs } from '../../configs'
 
 export type PostgresStorageConfigs = {
   host: string
@@ -20,9 +21,9 @@ export type PostgresStorageConfigs = {
 
 export default class PostgresStorage extends AStorage<number> {
   private pool: Pool
-  public constructor(tokenLifetime: number, configs: PostgresStorageConfigs) {
-    super(tokenLifetime)
-    this.pool = new Pool(configs)
+  public constructor(tokenLifetime: number, tableNames: typeof configs.table_names, pgConfigs: PostgresStorageConfigs) {
+    super(tokenLifetime, tableNames)
+    this.pool = new Pool(pgConfigs)
   }
 
   public async initialize(): Promise<void> {
@@ -32,10 +33,10 @@ export default class PostgresStorage extends AStorage<number> {
   }
   public async validate(): Promise<void> {
     const client = await this.pool.connect()
-    client.query('SELECT * FROM USERS')
-    client.query('SELECT * FROM USER_TOKEN_PAIRS')
-    client.query('SELECT * FROM CREDENTIALS')
-    client.query('SELECT * FROM USER_PROVIDERS')
+    client.query(`SELECT * FROM ${this.tableNames.users}`)
+    client.query(`SELECT * FROM ${this.tableNames.userTokenPairs}`)
+    client.query(`SELECT * FROM ${this.tableNames.credentials}`)
+    client.query(`SELECT * FROM ${this.tableNames.userProviders}`)
     client.release()
   }
   public async connect(): Promise<void> {
@@ -52,7 +53,7 @@ export default class PostgresStorage extends AStorage<number> {
     try {
       const insertRes = await client.query(
         `
-        INSERT INTO USERS (
+        INSERT INTO ${this.tableNames.users} (
           email,
           username,
           first_name,
@@ -95,7 +96,7 @@ export default class PostgresStorage extends AStorage<number> {
 
       await client.query(
         `
-        INSERT INTO USER_PROVIDERS (
+        INSERT INTO ${this.tableNames.userProviders} (
           user_id,
           provider,
           data
@@ -126,7 +127,7 @@ export default class PostgresStorage extends AStorage<number> {
     const client = await this.pool.connect()
     const insertRes = await client.query(
       `
-      INSERT INTO CREDENTIALS (
+      INSERT INTO ${this.tableNames.credentials} (
         user_id,
         email,
         password,
@@ -150,7 +151,7 @@ export default class PostgresStorage extends AStorage<number> {
     const client = await this.pool.connect()
     await client.query(
       `
-      UPDATE USER_TOKEN_PAIRS
+      UPDATE ${this.tableNames.userTokenPairs}
         SET revoked = true
         WHERE user_id = $1
     `,
@@ -158,7 +159,7 @@ export default class PostgresStorage extends AStorage<number> {
     )
     const insertRes = await client.query(
       `
-      INSERT INTO USER_TOKEN_PAIRS (
+      INSERT INTO ${this.tableNames.userTokenPairs} (
         user_id,
         token,
         lifetime,
@@ -180,7 +181,7 @@ export default class PostgresStorage extends AStorage<number> {
     const client = await this.pool.connect()
     const res = await client.query(
       `
-      SELECT * FROM CREDENTIALS WHERE email = $1 and strategy = $2;
+      SELECT * FROM ${this.tableNames.credentials} WHERE email = $1 and strategy = $2;
     `,
       [email, strategy]
     )
@@ -194,7 +195,7 @@ export default class PostgresStorage extends AStorage<number> {
     const res = await client.query(
       `
       SELECT *
-      FROM USER_TOKEN_PAIRS
+      FROM ${this.tableNames.userTokenPairs}
       WHERE token = $1
         AND EXTRACT(EPOCH FROM (current_timestamp - created)) <= lifetime
         AND NOT revoked;
@@ -220,7 +221,7 @@ export default class PostgresStorage extends AStorage<number> {
         extract(epoch from date_of_birth) as date_of_birth,
         gender,
         picture
-      FROM USERS WHERE id = $1
+      FROM ${this.tableNames.users} WHERE id = $1
     `,
       [userId]
     )
@@ -241,7 +242,7 @@ export default class PostgresStorage extends AStorage<number> {
         extract(epoch from date_of_birth) as date_of_birth,
         gender,
         picture
-      FROM USERS WHERE email = $1
+      FROM ${this.tableNames.users} WHERE email = $1
     `,
       [email]
     )
@@ -258,7 +259,7 @@ export default class PostgresStorage extends AStorage<number> {
     const client = await this.pool.connect()
     await client.query(
       `
-      INSERT INTO USER_PROVIDERS (
+      INSERT INTO ${this.tableNames.userProviders} (
         user_id,
         provider,
         data
@@ -278,7 +279,7 @@ export default class PostgresStorage extends AStorage<number> {
         extract(epoch from date_of_birth) as date_of_birth,
         gender,
         picture
-      FROM USERS WHERE id = $1
+      FROM ${this.tableNames.users} WHERE id = $1
     `,
       [userId]
     )
@@ -291,7 +292,7 @@ export default class PostgresStorage extends AStorage<number> {
     const client = await this.pool.connect()
     await client.query(
       `
-      UPDATE USER_TOKEN_PAIRS
+      UPDATE ${this.tableNames.userTokenPairs}
       SET revoked = TRUE
       WHERE token = $1;
     `,

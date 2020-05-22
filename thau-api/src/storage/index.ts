@@ -7,16 +7,16 @@ export const initStorage = async (configs: Configs) => {
   let storage
   switch (configs.data_backend) {
     case 'postgres': {
-      storage = new PostgresStorage(configs.token_lifetime, configs.postgres)
+      storage = new PostgresStorage(configs.token_lifetime, configs.table_names, configs.postgres)
       break
     }
     case 'mongo': {
-      storage = new MongoStorage(configs.token_lifetime, configs.mongo)
+      storage = new MongoStorage(configs.token_lifetime, configs.table_names, configs.mongo)
       await storage.connect()
       break
     }
     case 'sqlite': {
-      storage = new SQLiteStorage(configs.token_lifetime, configs.sqlite)
+      storage = new SQLiteStorage(configs.token_lifetime, configs.table_names, configs.sqlite)
       break
     }
     default: {

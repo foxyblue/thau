@@ -1,3 +1,5 @@
+import { configs } from "../configs"
+
 export enum SUPPORTED_STRATEGIES {
   password = 'password',
   google = 'google',
@@ -39,8 +41,11 @@ export type User<ID> = {
 
 export default abstract class AStorage<ID> {
   protected tokenLifetime: number
-  public constructor(tokenLifetime: number) {
+  protected tableNames: typeof configs.table_names
+  
+  public constructor(tokenLifetime: number, tableNames: typeof configs.table_names) {
     this.tokenLifetime = tokenLifetime
+    this.tableNames = tableNames
   }
 
   public abstract async initialize(): Promise<void>

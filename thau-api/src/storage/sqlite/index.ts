@@ -7,6 +7,7 @@ import AStorage, {
   Credentials,
   UserTokenPair,
 } from '../AStorage'
+import { configs } from '../../configs'
 import createSchema from './createSchema'
 
 export type SQLiteStorageConfigs = {
@@ -20,9 +21,10 @@ export default class SQLiteStorage extends AStorage<number> {
 
   public constructor(
     tokenLifetime: number,
+    tableNames: typeof configs.table_names,
     { filename, mode }: SQLiteStorageConfigs
   ) {
-    super(tokenLifetime)
+    super(tokenLifetime, tableNames)
     this.filename = filename
     this.mode = mode
     this.client = new sqlite3.Database(filename, mode)
@@ -51,11 +53,12 @@ export default class SQLiteStorage extends AStorage<number> {
           return resolve()
         }
       }
+      const { tableNames } = this
       db.serialize(() => {
-        db.run('SELECT * FROM USERS', cb(1))
-        db.run('SELECT * FROM USER_TOKEN_PAIRS', cb(2))
-        db.run('SELECT * FROM CREDENTIALS', cb(3))
-        db.run('SELECT * FROM USER_PROVIDERS', cb(4))
+        db.run(`SELECT * FROM ${tableNames.users}`, cb(1))
+        db.run(`SELECT * FROM ${tableNames.userTokenPairs}`, cb(2))
+        db.run(`SELECT * FROM ${tableNames.credentials}`, cb(3))
+        db.run(`SELECT * FROM ${tableNames.userProviders}`, cb(4))
       })
     })
   }
@@ -65,11 +68,12 @@ export default class SQLiteStorage extends AStorage<number> {
     provider: SUPPORTED_STRATEGIES,
     providerData: any
   ): Promise<User<number>> {
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       const db = this.client as sqlite3.Database
       db.run(
         `
-        INSERT INTO USERS (
+        INSERT INTO ${tableNames.users} (
           email,
           username,
           first_name,
@@ -99,7 +103,7 @@ export default class SQLiteStorage extends AStorage<number> {
           db.serialize(() => {
             db.run(
               `
-            INSERT INTO USER_PROVIDERS (
+            INSERT INTO ${tableNames.userProviders} (
               user_id,
               provider,
               data
@@ -108,7 +112,7 @@ export default class SQLiteStorage extends AStorage<number> {
               [creatdId, provider, JSON.stringify(providerData)],
               err => {
                 if (err) {
-                  db.run(`DELETE FROM USERS WHERE id = ?`, [creatdId])
+                  db.run(`DELETE FROM ${tableNames.users} WHERE id = ?`, [creatdId])
                   return reject(err)
                 }
               }
@@ -116,7 +120,7 @@ export default class SQLiteStorage extends AStorage<number> {
 
             db.get(
               `
-            SELECT * FROM USERS WHERE id = ?;
+            SELECT * FROM ${tableNames.users} WHERE id = ?;
           `,
               [creatdId],
               (err, user) => {
@@ -139,11 +143,11 @@ export default class SQLiteStorage extends AStorage<number> {
     strategy: SUPPORTED_STRATEGIES
   ): Promise<Credentials<number>> {
     const db = this.client as sqlite3.Database
-
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       db.run(
         `
-        INSERT INTO CREDENTIALS (
+        INSERT INTO ${tableNames.credentials} (
           user_id,
           email,
           password,
@@ -159,7 +163,7 @@ export default class SQLiteStorage extends AStorage<number> {
           const createdId = this.lastID
           db.get(
             `
-          SELECT * FROM CREDENTIALS WHERE id = ?
+          SELECT * FROM ${tableNames.credentials} WHERE id = ?
         `,
             [createdId],
             (err, row) => {
@@ -180,11 +184,11 @@ export default class SQLiteStorage extends AStorage<number> {
     strategy: SUPPORTED_STRATEGIES
   ): Promise<UserTokenPair<number>> {
     const db = this.client as sqlite3.Database
-
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       db.run(
         `
-        UPDATE USER_TOKEN_PAIRS
+        UPDATE ${tableNames.userTokenPairs}
         SET revoked = true
         WHERE user_id = ?
       `,
@@ -196,7 +200,7 @@ export default class SQLiteStorage extends AStorage<number> {
 
           db.run(
             `
-          INSERT INTO USER_TOKEN_PAIRS (
+          INSERT INTO ${tableNames.userTokenPairs} (
             user_id,
             token,
             lifetime,
@@ -208,7 +212,7 @@ export default class SQLiteStorage extends AStorage<number> {
               const createdId = this.lastID
               db.get(
                 `
-            SELECT * FROM CREDENTIALS WHERE id = ?
+            SELECT * FROM ${tableNames.credentials} WHERE id = ?
           `,
                 [createdId],
                 (err, row) => {
@@ -230,10 +234,11 @@ export default class SQLiteStorage extends AStorage<number> {
     strategy: SUPPORTED_STRATEGIES
   ): Promise<Credentials<number>> {
     const db = this.client as sqlite3.Database
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       db.get(
         `
-        SELECT * FROM CREDENTIALS WHERE email = ? and strategy = ?;
+        SELECT * FROM ${tableNames.credentials} WHERE email = ? and strategy = ?;
       `,
         [email, strategy],
         (err, row) => {
@@ -248,11 +253,12 @@ export default class SQLiteStorage extends AStorage<number> {
   }
   public getUserTokenPair(token: string): Promise<UserTokenPair<number>> {
     const db = this.client as sqlite3.Database
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       db.get(
         `
         SELECT *
-        FROM USER_TOKEN_PAIRS
+        FROM ${tableNames.userTokenPairs}
         WHERE token = ?
           AND strftime('%s', 'now') - strftime('%s', created) <= lifetime
           AND NOT revoked;
@@ -270,10 +276,11 @@ export default class SQLiteStorage extends AStorage<number> {
   }
   public getUserById(userId: number): Promise<User<number>> {
     return new Promise((resolve, reject) => {
+      const { tableNames } = this
       const db = this.client as sqlite3.Database
       db.get(
         `
-        SELECT * FROM USERS WHERE id = ?
+        SELECT * FROM ${tableNames.users} WHERE id = ?
       `,
         [userId],
         (err, user) => {
@@ -287,10 +294,11 @@ export default class SQLiteStorage extends AStorage<number> {
   }
   public getUserByEmail(email: string): Promise<User<number>> {
     return new Promise((resolve, reject) => {
+      const { tableNames } = this
       const db = this.client as sqlite3.Database
       db.get(
         `
-        SELECT * FROM USERS WHERE email = ?
+        SELECT * FROM ${tableNames.users} WHERE email = ?
       `,
         [email],
         (err, user) => {
@@ -310,9 +318,10 @@ export default class SQLiteStorage extends AStorage<number> {
   ): Promise<User<number>> {
     return new Promise((resolve, reject) => {
       const db = this.client as sqlite3.Database
+      const { tableNames } = this
       db.run(
         `
-        INSERT INTO USER_PROVIDERS (
+        INSERT INTO ${tableNames.userProviders} (
           user_id,
           provider,
           data
@@ -327,7 +336,7 @@ export default class SQLiteStorage extends AStorage<number> {
           const createdId = this.lastID
           db.get(
             `
-          SELECT * FROM USER_PROVIDERS WHERE id = ?;
+          SELECT * FROM ${tableNames.userProviders} WHERE id = ?;
         `,
             [createdId],
             (err, row) => {
@@ -345,9 +354,10 @@ export default class SQLiteStorage extends AStorage<number> {
   public revokeToken(token: string): Promise<void> {
     return new Promise((resolve, reject) => {
       const db = this.client as sqlite3.Database
+      const { tableNames } = this
       db.run(
         `
-        UPDATE USER_TOKEN_PAIRS
+        UPDATE ${tableNames.userTokenPairs}
         SET revoked = TRUE
         WHERE token = ?;
       `,
