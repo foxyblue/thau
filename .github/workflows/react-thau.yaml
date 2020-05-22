@@ -32,7 +32,8 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    name: Lint
+    name: Publish
+    needs: lint-and-build
     if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
