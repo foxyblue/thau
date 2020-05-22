@@ -1,4 +1,4 @@
-import { configs } from '../configs'
+import { TableNamesConfig } from "../configs"
 
 export enum SUPPORTED_STRATEGIES {
   password = 'password',
@@ -41,11 +41,11 @@ export type User<ID> = {
 
 export default abstract class AStorage<ID> {
   protected tokenLifetime: number
-  protected tableNames: typeof configs.table_names
+  protected tableNames: TableNamesConfig
 
   public constructor(
     tokenLifetime: number,
-    tableNames: typeof configs.table_names
+    tableNames: TableNamesConfig
   ) {
     this.tokenLifetime = tokenLifetime
     this.tableNames = tableNames

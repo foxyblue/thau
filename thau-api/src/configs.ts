@@ -4,18 +4,20 @@ import { MongoStorageConfigs } from './storage/mongo'
 import { PostgresStorageConfigs } from './storage/postgres'
 import { SQLiteStorageConfigs } from './storage/sqlite'
 
+export type TableNamesConfig = {
+  users: string
+  userTokenPairs: string
+  credentials: string
+  userProviders: string
+}
+
 export type Configs = {
   env: string
   swagger: boolean
   port: number
   supported_strategies: string[]
   data_backend: string
-  table_names: {
-    users: string
-    userTokenPairs: string
-    credentials: string
-    userProviders: string
-  }
+  table_names: TableNamesConfig
   token_lifetime: number
 
   sqlite: SQLiteStorageConfigs

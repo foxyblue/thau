@@ -6,7 +6,7 @@ import AStorage, {
   UserTokenPair,
 } from '../AStorage'
 import createSchema from './createSchema'
-import { configs } from '../../configs'
+import { TableNamesConfig } from '../../configs'
 
 export type PostgresStorageConfigs = {
   host: string
@@ -23,7 +23,7 @@ export default class PostgresStorage extends AStorage<number> {
   private pool: Pool
   public constructor(
     tokenLifetime: number,
-    tableNames: typeof configs.table_names,
+    tableNames: TableNamesConfig,
     pgConfigs: PostgresStorageConfigs
   ) {
     super(tokenLifetime, tableNames)
