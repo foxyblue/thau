@@ -1,0 +1,49 @@
+name: Build, Test and Publish react-thau
+
+on:
+  push:
+    paths:
+      - react-thau/**
+      - .github/workflows/react-thau.yml
+    branches: [ master ]
+  pull_request:
+    paths:
+      - react-thau/**
+      - .github/workflows/react-thau.yml
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm -g install yarn
+      - run: |
+          cd react-thau
+          yarn
+          yarn prettier:check
+          yarn lint
+          yarn build
+
+  publish:
+    runs-on: ubuntu-latest
+    name: Lint
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm install
+      - run: npm -g install yarn
+      - run: |
+          cd react-thau
+          yarn
+          yarn build
+          yarn publish --tag beta
