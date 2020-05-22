@@ -7,8 +7,8 @@ import AStorage, {
   Credentials,
   UserTokenPair,
 } from '../AStorage'
-import { configs } from '../../configs'
 import createSchema from './createSchema'
+import { TableNamesConfig } from '../../configs'
 
 export type SQLiteStorageConfigs = {
   filename: string
@@ -21,7 +21,7 @@ export default class SQLiteStorage extends AStorage<number> {
 
   public constructor(
     tokenLifetime: number,
-    tableNames: typeof configs.table_names,
+    tableNames: TableNamesConfig,
     { filename, mode }: SQLiteStorageConfigs
   ) {
     super(tokenLifetime, tableNames)

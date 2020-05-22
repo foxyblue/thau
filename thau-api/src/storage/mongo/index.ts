@@ -5,7 +5,7 @@ import AStorage, {
   UserTokenPair,
 } from '../AStorage'
 import { ObjectID, MongoClientOptions, MongoClient } from 'mongodb'
-import { configs } from '../../configs'
+import { TableNamesConfig } from '../../configs'
 
 export type MongoStorageConfigs = MongoClientOptions & {
   url: string
@@ -15,7 +15,7 @@ export default class MongoStorage extends AStorage<ObjectID> {
   private client: MongoClient
   public constructor(
     tokenLifetime: number,
-    tableNames: typeof configs.table_names,
+    tableNames: TableNamesConfig,
     { url, ...options }: MongoStorageConfigs
   ) {
     super(tokenLifetime, tableNames)

@@ -8,7 +8,7 @@ import TokensAPI from './api/tokens'
 import UsersAPI from './api/users'
 import ConfigsAPI from './api/configs'
 
-import initConfigs from './configs'
+import initConfigs, { Configs } from './configs'
 import AStorage from './storage/AStorage'
 import generateSwaggerDocumentation from './swagger'
 
@@ -16,6 +16,7 @@ declare global {
   namespace Express {
     interface Request {
       storage: AStorage<any>
+      configs: Configs
     }
   }
 }
@@ -27,6 +28,7 @@ const main = async () => {
   const app = express()
   app.use((req, res, next) => {
     req.storage = storage
+    req.configs = configs
     return next()
   })
   app.use(helmet())
