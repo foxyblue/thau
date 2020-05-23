@@ -1,7 +1,13 @@
 version: "3.7"
+x-thau:
+  &thau
+  image: mgrin/thau:${GITHUB_SHA:-latest}
+  networks:
+    - thau-network
 
 services:
   thau-sqlite:
+    << : *thau
     image: mgrin/thau:${GITHUB_SHA:-latest}
     environment:
       - ENV=test
@@ -10,10 +16,9 @@ services:
       - ENABLED_STRATEGIES=password
     ports:
       - 9001:9000
-    networks:
-      - thau-network
 
   thau-mongo:
+    << : *thau
     image: mgrin/thau:${GITHUB_SHA:-latest}
     environment:
       - ENV=test
@@ -26,6 +31,7 @@ services:
       - thau-network
 
   thau-postgres:
+    << : *thau
     image: mgrin/thau:${GITHUB_SHA:-latest}
     environment:
       - ENV=test
@@ -39,6 +45,19 @@ services:
     command: sh -c "sleep 5 && yarn start"
     networks:
       - thau-network
+
+  thau-sqlite-http:
+    << : *thau
+    image: mgrin/thau:${GITHUB_SHA:-latest}
+    environment:
+      - ENV=test
+      - DATA_BACKEND=sqlite
+      - SQLITE_FILENAME=db
+      - ENABLED_STRATEGIES=password
+      - EVENTS_BROADCAST_CHANNEL=http
+      - BROADCAST_HTTP_URL=http://thau-tests:10000/webhook
+    ports:
+      - 9004:9000
 
   mongo:
     image: mongo:latest

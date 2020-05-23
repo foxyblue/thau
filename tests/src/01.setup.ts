@@ -11,7 +11,7 @@ describe('Services are running', () => {
     it(`[${NAME[host]}]: Should get the heartbeat from instance of auth service`, async () => {
       const heartbeat = await superagent.get(`${host}/heartbeat`)
       expect(heartbeat.status).to.equal(200)
-      expect(heartbeat.body.data_backend).to.equal(NAME[host])
+      expect(heartbeat.body.data_backend).to.equal(NAME[host].split('-')[0])
     })
   }
 })

@@ -11,12 +11,15 @@ import ConfigsAPI from './api/configs'
 import initConfigs, { Configs } from './configs'
 import AStorage from './storage/AStorage'
 import generateSwaggerDocumentation from './swagger'
+import { initBroadcasting } from './broadcast'
+import ABroadcast from './broadcast/ABroadcast'
 
 declare global {
   namespace Express {
     interface Request {
       storage: AStorage<any>
       configs: Configs
+      broadcast: ABroadcast
     }
   }
 }
@@ -24,13 +27,16 @@ declare global {
 const main = async () => {
   const configs = initConfigs()
   const storage = await initStorage(configs)
+  const broadcast = await initBroadcasting(configs)
 
   const app = express()
   app.use((req, res, next) => {
     req.storage = storage
     req.configs = configs
+    req.broadcast = broadcast
     return next()
   })
+
   app.use(helmet())
   app.use(cors())
   app.use(express.json())
@@ -43,6 +49,8 @@ const main = async () => {
     res.send({
       service: 'thau',
       data_backend: configs.data_backend,
+      eventsBroadcastChannel: configs.eventsBroadcastChannel,
+      supported_strattegies: configs.supported_strategies,
       status: 'OK',
     })
   })

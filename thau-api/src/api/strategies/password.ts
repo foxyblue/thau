@@ -3,6 +3,7 @@ import { APIError } from '../utils'
 import { SUPPORTED_STRATEGIES } from '../../storage/AStorage'
 import { hash } from '../../crypto'
 import { createToken } from '../tokens'
+import { EVENT_TYPE } from '../../broadcast/ABroadcast'
 
 const handleExchangePasswordForToken = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -48,6 +49,10 @@ const handleExchangePasswordForToken = async (req: Request, res: Response) => {
     credentials.user_id,
     SUPPORTED_STRATEGIES.password
   )
+
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_PASSWORD_FOR_TOKEN, {
+    user_id: credentials.user_id,
+  })
 
   return res.send({ token })
 }

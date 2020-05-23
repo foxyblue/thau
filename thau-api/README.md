@@ -6,6 +6,8 @@
 
 **Thau** API is documeneted with [swagger](https://thau.quester-app.dev/api-docs) (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
 
+**Thau** API can broadcast events outsidee through different broadcasting channels. Currently sUpported channels: `http(s)` webhooks, `kafka` topic
+
 # Run
 As a docker image:
 ```
@@ -41,21 +43,23 @@ See next section to know more about configuration options
 * `USER_TOKEN_PAIRS_TABLE_NAME` - name for the `USER_TOKEN_PAIRS` table. Default: `USER_TOKEN_PAIRS`
 * `CREDENTIALS_TABLE_NAME` - name for the `CREDENTIALS` table. Default: `CREDENTIALS`
 * `USER_PROVIDERS_TABLE_NAME` - name for the `USER_PROVIDERS` table. Default: `USER_PROVIDERS`
+* `EVENTS_BROADCAST_CHANNEL` - the events broadcasting channel. Possible values: `http`, `kafka`
 
-For every `DATA_BACKEND` and login strategy you have to provide additional variables. The **REQUIRED** now means that it's requuired only if a given data storage or a given login strategy is used:
+## Data Backend configurations
+For every `DATA_BACKEND` you have to provide additional variables. The **REQUIRED** now means that it's required only if a given data storage is used:
 
-## Configurations for `DATA_BACKEND=sqlite`:
+### Configurations for `DATA_BACKEND=sqlite`:
 Example can be seen in [environments/env.sqlite.template](https://github.com/MGrin/thau/blob/master/environments/env.sqlite.template)
 
 * `SQLITE_FILENAME` - **REQUIRED** filename for sqlite DB
 
-## Configurations for `DATA_BACKEND=mongo`:
+### Configurations for `DATA_BACKEND=mongo`:
 Example can be seen in [environments/env.mongo.template](https://github.com/MGrin/thau/blob/master/environments/env.mongo.template)
 
 * `MONGO_URL` - **REQUIRED** url to connect to MongoDB
 * `MONGO_CLIENT_OPTIONS` - a JSON value with MongoClient parameters that will be passed to the client constructor. Documentation of the shape of these parameters: [http://mongodb.github.io/node-mongodb-native/3.6/api/MongoClient.html#.connect](http://mongodb.github.io/node-mongodb-native/3.6/api/MongoClient.html#.connect)
 
-## Configurations for `DATA_BACKEND=postgres`:
+### Configurations for `DATA_BACKEND=postgres`:
 Example can be seen in [environments/env.postgres.template](https://github.com/MGrin/thau/blob/master/environments/env.postgres.template)
 
 * `PG_HOST` - **REQUIRED** Postgres host
@@ -67,23 +71,46 @@ Example can be seen in [environments/env.postgres.template](https://github.com/M
 * `PG_IDLE_TIMEOUT_MS` - Connection idle timeout in milliseconds. Default: no timeout
 * `PG_MAX_CONNECITONS` - Maximum number of connection in a pool. Deefault: `10`
 
-## Configuration for the `google` login strategy
+## Login strategy configurations
+For every `ENABLED_STRATEGIES` you have to provide additional variables. The **REQUIRED** now means that it's required only if a given login strategy is used:
+
+### Configuration for the `google` login strategy
 In case you put `google` in your `ENABLED_STRATEGIES`, please configuree the following:
 
 * `GOOGLE_CLIENT_ID` - **REQUIRED** your google application client id
 
-## Configuration for the `facebook` login strategy
+### Configuration for the `facebook` login strategy
 In case you put `facebook` in your `ENABLED_STRATEGIES`, please configuree the following:
 
 * `FACEBOOK_CLIENT_ID` - **REQUIRED** your google application client id
 * `FACEBOOK_CLIENT_SECRET` - **REQUIRED** your google application client secret
 * `FACEBOOK_GRAPH_VERSION` - the version of Facebook GraphAPI to use. Default: `v7.0`
 
+## Broadcast channel configuration
+
+Events broadcasted:
+
+* `CREATE_NEW_USER_WITH_PASSWORD` - new user is created with a password strategy. Payload: user id
+* `EXCHANGE_FACEBOOK_AUTH_TOKEN_FOR_TOKEN` - a user is authenticated using facebook. Payload: user id
+* `EXCHANGE_GOOGLE_ID_TOKEN_FOR_TOKEN` - a user is authenticated using google. Payload: user id
+* `EXCHANGE_PASSWORD_FOR_TOKEN` - a user is authenticated using password. Payload: user id
+* `EXCHANGE_TOKEN_FOR_USER` - a token is exchanged for user. Payload: user id
+* `REVOKE_TOKEN` - a token has been revoked.
+
+For every `EVENTS_BROADCAST_CHANNEL` you have to provide additional variables. The **REQUIRED** now means that it's required only if a given broadcast channel is used.
+
+### Configurations for the `http` broadcast channel:
+In case you put `http` in your `EVENTS_BROADCAST_CHANNEL`, please configure thee following:
+
+* `BROADCAST_HTTP_URL` - **REQUIRED** your endpoint that will receive the events
+* `BROADCAST_HTTP_HEADERS` - a JSON value with custom headers you need to set for your HTTP webhook to be reached
+
+
 # Development
 
 Firstly, rename all `environments/env.****.template` to `environments/.env.****.template` with your own values for some variables. These files will be used by `docker-compose` eto bootstrap containers
 
-You can start 3 instances of **Thau** with 3 different data backends (sqlite, postgres and mongo) by:
+You can start 4 instances of **Thau** with 3 different data backends (sqlite, postgres and mongo) and http broadcaster by:
 ```
 make dev
 ```
@@ -102,23 +129,20 @@ You can easily implement the new backend. To do so you'll have to:
 5. Add new service in `docker-compose.yaml` file following this template:
 ```
   service: thau-YOUR_STORAGE
-    build:
-      context: ./thau-api
-      target: dev
+    << : *thau
     env_file: environments/.env.YOUR_STORAGE
-    volumes:
-      - ./thau-api:/usr/app:ro
     ports:
-      - 9004:9000
-    networks:
-      - thau-network
+      - <LOCALHOST_PORT>:9000
 ```
-6. Add your service to the list of services to test in `tests/srs/utils.ts`:
-    * `BACKENDS` contains the list of hosts to run tests againts
-    * `NAMES` contains the mapping between the host and the storage name
+6. Add your service to the list of services to test in `environments/.env.tests` into `TESTABLE_DATA_BACKENDS` variable
 7. Run `make test` to see if things are working
 
 ## New login strategy
 TO BE DOCUMENTED
 
 But long story short: look at `thau-api/src/api/tokens` at the `handleExchange` function and at the functions inside `thau-api/src/api/strategies`
+
+## New broadcasting channel
+TO BE DOCUMENTED
+
+But long story short: look at `thau-api/src/broadcast`

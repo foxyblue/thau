@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express'
+import { EVENT_TYPE } from '../broadcast/ABroadcast'
 import { APIError, withCatch } from './utils'
 import { generateSalt } from '../crypto'
 import AStorage, { SUPPORTED_STRATEGIES } from '../storage/AStorage'
@@ -53,12 +54,17 @@ const handleExchangeTokenForUser = async (req: Request, res: Response) => {
     throw new APIError('User not found', 401)
   }
   const provider = userTokenPair.strategy
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_TOKEN_FOR_USER, {
+    provider,
+    user_id: user.id,
+  })
   return res.send({ user, provider })
 }
 
 const handleRevokeToken = async (req: Request, res: Response) => {
   const token = req.query.token as string
   await req.storage.revokeToken(token)
+  req.broadcast.publishEvent(EVENT_TYPE.REVOKE_TOKEN, { revoked: true })
   return res.send()
 }
 

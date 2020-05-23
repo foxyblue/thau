@@ -1,21 +1,21 @@
 import { Request, Response } from 'express'
 // @ts-ignore
 import { Facebook } from 'fb'
-import { configs } from '../../configs'
 import { APIError } from '../utils'
 import { SUPPORTED_STRATEGIES } from '../../storage/AStorage'
 import { createToken } from '../tokens'
+import { EVENT_TYPE } from '../../broadcast/ABroadcast'
 
 const handleExchangeFacebookForToken = async (req: Request, res: Response) => {
-  if (!configs.facebook) {
+  if (!req.configs.facebook) {
     throw new APIError('No facebook client id found!', 500)
   }
   const { accessToken } = req.body
 
   const facebookClient = new Facebook({
-    appId: configs.facebook.clientId,
-    appSecret: configs.facebook.clientSecret,
-    version: configs.facebook.graphVersion,
+    appId: req.configs.facebook.clientId,
+    appSecret: req.configs.facebook.clientSecret,
+    version: req.configs.facebook.graphVersion,
   })
   facebookClient.setAccessToken(accessToken)
   const fbUserResponse = await facebookClient.api('/me', {
@@ -41,6 +41,11 @@ const handleExchangeFacebookForToken = async (req: Request, res: Response) => {
     req.storage,
     user.id,
     SUPPORTED_STRATEGIES.facebook
+  )
+
+  req.broadcast.publishEvent(
+    EVENT_TYPE.EXCHANGE_FACEBOOK_AUTH_TOKEN_FOR_TOKEN,
+    { user_id: user.id }
   )
 
   return res.send({ token })
