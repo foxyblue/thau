@@ -125,10 +125,10 @@ const initSupportesStrategies = () => {
       'No ENABLED_STRATEGIES env variable defined. Please, define the list of login strategies you want to use!'
     )
   }
-  const supported_strategies = enabledStrategies
+  const supportedStrategies = enabledStrategies
     .split(',')
     .map(s => s.toLowerCase())
-  for (const strategy of supported_strategies) {
+  for (const strategy of supportedStrategies) {
     if (Object.keys(SUPPORTED_STRATEGIES).indexOf(strategy) === -1) {
       const errorMessage = `Strategy ${strategy} is not supported!\nThis is the full list of supported strategies:\n${Object.keys(
         SUPPORTED_STRATEGIES
@@ -137,11 +137,11 @@ const initSupportesStrategies = () => {
     }
   }
 
-  return supported_strategies
+  return supportedStrategies
 }
 
-const initGoogleStrategyParams = (supported_strategies: string[]) => {
-  if (supported_strategies.indexOf(SUPPORTED_STRATEGIES.google) !== -1) {
+const initGoogleStrategyParams = (supportedStrategies: string[]) => {
+  if (supportedStrategies.indexOf(SUPPORTED_STRATEGIES.google) !== -1) {
     const google = {
       clientId: ENV.GOOGLE_CLIENT_ID as string,
     }
@@ -156,8 +156,8 @@ const initGoogleStrategyParams = (supported_strategies: string[]) => {
   }
 }
 
-const initFacebookStrategyParams = (supported_strategies: string[]) => {
-  if (supported_strategies.indexOf(SUPPORTED_STRATEGIES.facebook) !== -1) {
+const initFacebookStrategyParams = (supportedStrategies: string[]) => {
+  if (supportedStrategies.indexOf(SUPPORTED_STRATEGIES.facebook) !== -1) {
     const facebook = {
       clientId: ENV.FACEBOOK_CLIENT_ID as string,
       clientSecret: ENV.FACEBOOK_CLIENT_SECRET as string,

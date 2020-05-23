@@ -14,7 +14,6 @@ format:
 	cd thau-api && yarn prettier:write && yarn lint
 	cd react-thau && yarn prettier:write && yarn lint
 	cd tests && yarn prettier:write && yarn lint
-	cd examples/react-thau && yarn prettier:write && yarn lint
 
 test: dev
 	sleep 5
@@ -43,7 +42,7 @@ test-ci:
 	echo "RUNNING TESTS"
 	docker run \
 		--network=thau_thau-network \
-		-e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres \
+		-e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres,sqlite-http \
 		-e ENABLED_STRATEGIES=password \
 		-e "TERM=xterm-256color" \
 		mgrin/thau-tests:local

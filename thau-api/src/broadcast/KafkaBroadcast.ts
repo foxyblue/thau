@@ -34,7 +34,7 @@ export default class KafkaBroadcast extends ABroadcast {
   ): Promise<boolean> {
     try {
       const id = new ObjectId()
-      const records = await this.producer.send({
+      await this.producer.send({
         topic: this.topicName,
         messages: [
           {
@@ -43,7 +43,6 @@ export default class KafkaBroadcast extends ABroadcast {
           },
         ],
       })
-      console.log(records)
     } catch (err) {
       console.error(err)
     }
