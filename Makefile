@@ -44,5 +44,6 @@ test-ci:
 		--network=thau_thau-network \
 		-e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres,sqlite-http \
 		-e ENABLED_STRATEGIES=password \
+		-e WEBHOOK_PORT=10000 \
 		-e "TERM=xterm-256color" \
 		mgrin/thau-tests:local
