@@ -64,7 +64,7 @@ jobs:
           -e ENABLED_STRATEGIES=password \
           -e WEBHOOK_PORT=10000 \
           -e "TERM=xterm-256color" \
-          mgrin/thau-tests:local
+          mgrin/thau-tests:$GITHUB_SHA
 
   build-and-push:
     runs-on: ubuntu-latest
