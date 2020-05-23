@@ -58,7 +58,7 @@ jobs:
 
         echo "RUNNING TESTS"
         docker run \
-          --name thau-tests
+          --name thau-tests \
           --network=thau_thau-network \
           -p 10000:10000 \
           -e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres,sqlite-http \
