@@ -50,7 +50,6 @@ jobs:
         cd ../
 
         echo "RUNNING docker-compose.ci"
-        IP_ADDRESS=$(ip addr show | grep "\binet\b.*\bdocker0\b" | awk '{print $2}' | cut -d '/' -f 1)
         docker-compose -f docker-compose.ci.yaml up -d
         docker-compose -f docker-compose.ci.yaml ps
 
@@ -59,6 +58,7 @@ jobs:
 
         echo "RUNNING TESTS"
         docker run \
+          --name thau-tests
           --network=thau_thau-network \
           -p 10000:10000 \
           -e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres,sqlite-http \

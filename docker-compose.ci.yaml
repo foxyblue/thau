@@ -55,7 +55,7 @@ services:
       - SQLITE_FILENAME=db
       - ENABLED_STRATEGIES=password
       - EVENTS_BROADCAST_CHANNEL=http
-      - BROADCAST_HTTP_URL=http://${IP_ADDRESS}:10000/webhook
+      - BROADCAST_HTTP_URL=http://thau-tests:10000/webhook
     ports:
       - 9004:9000
 
