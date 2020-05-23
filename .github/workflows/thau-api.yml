@@ -50,6 +50,7 @@ jobs:
         cd ../
 
         echo "RUNNING docker-compose.ci"
+        IP_ADDRESS=$(ip addr show | grep "\binet\b.*\bdocker0\b" | awk '{print $2}' | cut -d '/' -f 1)
         docker-compose -f docker-compose.ci.yaml up -d
         docker-compose -f docker-compose.ci.yaml ps
 
