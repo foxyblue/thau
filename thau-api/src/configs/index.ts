@@ -2,12 +2,12 @@ import * as dotenv from 'dotenv'
 
 import readConfigFromEnv from './readFromEnv'
 import readConfigFromFile from './readFromFile'
-import { SQLiteStorageConfigs } from "../storage/sqlite"
-import { MongoStorageConfigs } from "../storage/mongo"
-import { PostgresStorageConfigs } from "../storage/postgres"
-import { SUPPORTED_BROADCAST } from "../broadcast/ABroadcast"
-import { HTTPBroadcastConfigs } from "../broadcast/HTTPBroadcast"
-import { KafkaBroadcastConfigs } from "../broadcast/KafkaBroadcast"
+import { SQLiteStorageConfigs } from '../storage/sqlite'
+import { MongoStorageConfigs } from '../storage/mongo'
+import { PostgresStorageConfigs } from '../storage/postgres'
+import { SUPPORTED_BROADCAST } from '../broadcast/ABroadcast'
+import { HTTPBroadcastConfigs } from '../broadcast/HTTPBroadcast'
+import { KafkaBroadcastConfigs } from '../broadcast/KafkaBroadcast'
 
 export type TableNamesConfig = {
   users: string

@@ -6,7 +6,12 @@ import { SQLiteStorageConfigs } from '../storage/sqlite'
 import { SUPPORTED_BROADCAST } from '../broadcast/ABroadcast'
 import { HTTPBroadcastConfigs } from '../broadcast/HTTPBroadcast'
 import { KafkaBroadcastConfigs } from '../broadcast/KafkaBroadcast'
-import { TableNamesConfig, Configs, defaultConfigs, SUPPORTED_STORAGES } from '.'
+import {
+  TableNamesConfig,
+  Configs,
+  defaultConfigs,
+  SUPPORTED_STORAGES,
+} from '.'
 
 const ENV = {
   BROADCAST_HTTP_URL: process.env.BROADCAST_HTTP_URL as string,
