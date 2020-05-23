@@ -1,11 +1,17 @@
 import * as dotenv from 'dotenv'
-import { SUPPORTED_STRATEGIES } from './storage/AStorage'
-import { MongoStorageConfigs } from './storage/mongo'
-import { PostgresStorageConfigs } from './storage/postgres'
-import { SQLiteStorageConfigs } from './storage/sqlite'
-import { SUPPORTED_BROADCAST } from './broadcast/ABroadcast'
-import { HTTPBroadcastConfigs } from './broadcast/HTTPBroadcast'
-import { KafkaBroadcastConfigs } from './broadcast/KafkaBroadcast'
+import { SUPPORTED_STRATEGIES } from '../storage/AStorage'
+import { MongoStorageConfigs } from '../storage/mongo'
+import { PostgresStorageConfigs } from '../storage/postgres'
+import { SQLiteStorageConfigs } from '../storage/sqlite'
+import { SUPPORTED_BROADCAST } from '../broadcast/ABroadcast'
+import { HTTPBroadcastConfigs } from '../broadcast/HTTPBroadcast'
+import { KafkaBroadcastConfigs } from '../broadcast/KafkaBroadcast'
+import {
+  TableNamesConfig,
+  Configs,
+  defaultConfigs,
+  SUPPORTED_STORAGES,
+} from '.'
 
 const ENV = {
   BROADCAST_HTTP_URL: process.env.BROADCAST_HTTP_URL as string,
@@ -47,75 +53,6 @@ const ENV = {
   USER_TOKEN_PAIRS_TABLE_NAME: process.env
     .USER_TOKEN_PAIRS_TABLE_NAME as string,
   USERS_TABLE_NAME: process.env.USERS_TABLE_NAME as string,
-}
-
-export type TableNamesConfig = {
-  users: string
-  userTokenPairs: string
-  credentials: string
-  userProviders: string
-}
-
-export enum SUPPORTED_STORAGES {
-  postgres = 'postgres',
-  mongo = 'mongo',
-  sqlite = 'sqlite',
-}
-
-export type Configs = {
-  env: string
-  swagger: boolean
-  port: number
-  supported_strategies: string[]
-  data_backend: SUPPORTED_STORAGES
-  table_names: TableNamesConfig
-  token_lifetime: number
-
-  sqlite: SQLiteStorageConfigs
-  mongo: MongoStorageConfigs
-  postgres: PostgresStorageConfigs
-
-  google?: {
-    clientId: string
-  }
-  facebook?: {
-    clientId: string
-    clientSecret: string
-    graphVersion: string
-  }
-
-  eventsBroadcastChannel?: SUPPORTED_BROADCAST
-  broadcast: {
-    http?: HTTPBroadcastConfigs
-    kafka?: KafkaBroadcastConfigs
-  }
-}
-
-export const defaultConfigs: Configs = {
-  env: 'local',
-  swagger: false,
-  port: 9000,
-  supported_strategies: [],
-  data_backend: 'postgres' as SUPPORTED_STORAGES,
-  table_names: {
-    users: 'USERS',
-    userTokenPairs: 'USER_TOKEN_PAIRS',
-    credentials: 'CREDENTIALS',
-    userProviders: 'USER_PROVIDERS',
-  },
-  token_lifetime: 1000 * 60 * 60 * 24 * 10,
-  sqlite: {
-    filename: ':memory',
-  },
-  mongo: {
-    url: '',
-    useUnifiedTopology: true,
-  },
-  postgres: {
-    host: '',
-    port: 5432,
-  },
-  broadcast: {},
 }
 
 const initSupportesStrategies = () => {
@@ -305,7 +242,7 @@ const initKafkaBroadcastParams = () => {
   return kafka
 }
 
-const initConfigs = () => {
+const readConfigFromEnv = () => {
   dotenv.config()
   const configs = {} as Configs
   configs.env = (ENV.ENV as string) || defaultConfigs.env
@@ -360,4 +297,4 @@ const initConfigs = () => {
   return configs
 }
 
-export default initConfigs
+export default readConfigFromEnv

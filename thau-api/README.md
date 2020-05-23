@@ -34,6 +34,7 @@ SQLITE_FILENAME=db
 See next section to know more about configuration options
 
 # Configure
+**Thau** API can be configured using ENV variables or config file. Following documentation describes the environment variables flow. For file based cconfiguration please see below.
 
 ## General confgurations:
 * `ENV` - **REQUIRED** the name of environment the service is running.
@@ -63,7 +64,7 @@ Example can be seen in [environments/env.mongo.template](https://github.com/MGri
 Example can be seen in [environments/env.postgres.template](https://github.com/MGrin/thau/blob/master/environments/env.postgres.template)
 
 * `PG_HOST` - **REQUIRED** Postgres host
-* `PG_PORT` - Postgres port. Default `5432`
+* `PG_PORT` - **REQUIRED** Postgres port. Default `5432`
 * `PG_USER` - Postgres user
 * `PG_PASSWORD` - Postgres password
 * `PG_DATABASE` - Postgres database
@@ -114,6 +115,74 @@ In case you put `kafka` in your `EVENTS_BROADCAST_CHANNEL`, please configure the
 * `BROADCAST_KAFKA_REQUEST_TIMEOUT` - kafka request timeout
 * `BROADCAST_KAFKA_RETRY` - a JSON value for the [KafkaJS Retry configuration](https://kafka.js.org/docs/configuration#retry)
 * `BROADCAST_KAFKA_SASL` - a JSON value for the [KafkaJS SASL cconfiguration](https://kafka.js.org/docs/configuration#sasl)
+
+## Configuration file
+Instead of cconfiguring your **Thau** API instance using env variables you can set a configuration file:
+
+1. Create a configuration file in `json` or `yaml` formats wherever you prefer
+2. Set an envvironment variable `THAU_CONFIG` containing the path to your config file
+
+The config file should havee the following structure:
+```typescript
+{
+  env: string
+  swagger: boolean
+  port: number
+  supported_strategies: string[]
+  data_backend: SUPPORTED_STORAGES
+  table_names: TableNamesConfig
+  token_lifetime: number
+
+  sqlite: SQLiteStorageConfigs
+  mongo: MongoStorageConfigs
+  postgres: PostgresStorageConfigs
+
+  google?: {
+    clientId: string
+  }
+  facebook?: {
+    clientId: string
+    clientSecret: string
+    graphVersion: string
+  }
+
+  eventsBroadcastChannel?: SUPPORTED_BROADCAST
+  broadcast: {
+    http?: HTTPBroadcastConfigs
+    kafka?: KafkaBroadcastConfigs
+  }
+}
+```
+
+Here are default values:
+```typescript
+{
+  env: 'local',
+  swagger: false,
+  port: 9000,
+  supported_strategies: [],
+  data_backend: 'sqlite' as SUPPORTED_STORAGES,
+  table_names: {
+    users: 'USERS',
+    userTokenPairs: 'USER_TOKEN_PAIRS',
+    credentials: 'CREDENTIALS',
+    userProviders: 'USER_PROVIDERS',
+  },
+  token_lifetime: 1000 * 60 * 60 * 24 * 10,
+  sqlite: {
+    filename: 'db',
+  },
+  mongo: {
+    url: '',
+    useUnifiedTopology: true,
+  },
+  postgres: {
+    host: '',
+    port: 5432,
+  },
+  broadcast: {},
+}
+```
 
 # Development
 
