@@ -16,7 +16,7 @@ const readFromFile = (filepath: string) => {
   if (ext === '.json') {
     configs = require(filepath)
   } else {
-    let fileContents = fs.readFileSync(filepath, 'utf8')
+    const fileContents = fs.readFileSync(filepath, 'utf8')
     configs = yaml.safeLoad(fileContents)
   }
 
