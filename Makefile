@@ -42,6 +42,7 @@ test-ci:
 	echo "RUNNING TESTS"
 	docker run \
 		--network=thau_thau-network \
+		-p 10000:10000 \
 		-e TESTABLE_DATA_BACKENDS=sqlite,mongo,postgres,sqlite-http \
 		-e ENABLED_STRATEGIES=password \
 		-e WEBHOOK_PORT=10000 \
