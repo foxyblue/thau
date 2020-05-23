@@ -1,7 +1,5 @@
-import NodeRSA from 'node-rsa'
 import crypto from 'crypto'
 import * as dotenv from 'dotenv'
-import { Configs } from './configs'
 
 dotenv.config()
 
@@ -10,6 +8,7 @@ export const generateSalt = () =>
     .randomBytes(128)
     .toString('hex')
     .slice(0, 64)
+
 export const hash = (str: string, salt: string) => {
   const hashContent = crypto.createHmac('sha512', salt)
   hashContent.update(str)

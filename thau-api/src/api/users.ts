@@ -3,6 +3,7 @@ import { withCatch, APIError } from './utils'
 import { createToken } from './tokens'
 import { generateSalt, hash } from '../crypto'
 import AStorage, { SUPPORTED_STRATEGIES, User } from '../storage/AStorage'
+import { EVENT_TYPE } from '../broadcast/ABroadcast'
 
 export const createUser = async (
   storage: AStorage<any>,
@@ -86,6 +87,8 @@ const handleCreateUser = async (req: Request, res: Response) => {
     user.id,
     SUPPORTED_STRATEGIES.password
   )
+
+  req.broadcast.publishEvent(EVENT_TYPE.CREATE_NEW_USER_WITH_PASSWORD, { user_id: user.id })
   return res.send({ token })
 }
 

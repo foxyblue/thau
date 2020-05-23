@@ -1,20 +1,20 @@
 import { Request, Response } from 'express'
 import { OAuth2Client } from 'google-auth-library'
-import { configs } from '../../configs'
 
 import { APIError } from '../utils'
 import { SUPPORTED_STRATEGIES } from '../../storage/AStorage'
 import { createToken } from '../tokens'
+import { EVENT_TYPE } from '../../broadcast/ABroadcast'
 
 const handleExchangeGoogleForToken = async (req: Request, res: Response) => {
-  if (!configs.google) {
+  if (!req.configs.google) {
     throw new APIError('No google client id found!', 500)
   }
   const { id_token } = req.body
-  const googleClient = new OAuth2Client(configs.google.clientId)
+  const googleClient = new OAuth2Client(req.configs.google.clientId)
   const ticket = await googleClient.verifyIdToken({
     idToken: id_token,
-    audience: configs.google.clientId,
+    audience: req.configs.google.clientId,
   })
   const payload = ticket.getPayload()
   if (!payload) {
@@ -41,6 +41,7 @@ const handleExchangeGoogleForToken = async (req: Request, res: Response) => {
     user.id,
     SUPPORTED_STRATEGIES.google
   )
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_GOOGLE_ID_TOKEN_FOR_TOKEN, { user_id: user.id })
 
   return res.send({ token })
 }

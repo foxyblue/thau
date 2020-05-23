@@ -22,6 +22,7 @@ test: dev
 	docker run \
 		--network=thau_thau-network \
 		--env-file ./environments/.env.tests \
+		-p 10000:10000 \
 		-e "TERM=xterm-256color" \
 		thau-tests
 

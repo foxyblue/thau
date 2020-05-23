@@ -1,41 +1,42 @@
 version: "3.7"
+x-thau:
+  &thau
+  build:
+    context: ./thau-api
+    target: dev
+  volumes:
+    - ./thau-api:/usr/app:ro
+  networks:
+    - thau-network
 
 services:
   thau-sqlite:
-    build:
-      context: ./thau-api
-      target: dev
+    << : *thau
     env_file: environments/.env.sqlite
-    volumes:
-      - ./thau-api:/usr/app:ro
     ports:
       - 9001:9000
-    networks:
-      - thau-network
 
   thau-mongo:
-    build:
-      context: ./thau-api
-      target: dev
+    << : *thau
     env_file: environments/.env.mongo
-    volumes:
-      - ./thau-api:/usr/app:ro
     ports:
       - 9002:9000
-    networks:
-      - thau-network
+    depends_on:
+      - mongo
 
   thau-postgres:
-    build:
-      context: ./thau-api
-      target: dev
+    << : *thau
     env_file: environments/.env.postgres
-    volumes:
-      - ./thau-api:/usr/app:ro
     ports:
       - 9003:9000
-    networks:
-      - thau-network
+    depends_on:
+      - postgres
+
+  thau-sqlite-http:
+    << : *thau
+    env_file: environments/.env.sqlite.http
+    ports:
+      - 9004:9000
 
   mongo:
     image: mongo:latest
@@ -56,6 +57,11 @@ services:
       - POSTGRES_USER=admin
     networks:
       - thau-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 networks:
   thau-network:

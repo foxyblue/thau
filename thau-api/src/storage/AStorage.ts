@@ -4,8 +4,6 @@ export enum SUPPORTED_STRATEGIES {
   password = 'password',
   google = 'google',
   facebook = 'facebook',
-  github = 'github',
-  gitlab = 'gitlab',
 }
 
 export type Credentials<ID> = {
