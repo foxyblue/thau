@@ -105,6 +105,15 @@ In case you put `http` in your `EVENTS_BROADCAST_CHANNEL`, please configure thee
 * `BROADCAST_HTTP_URL` - **REQUIRED** your endpoint that will receive the events
 * `BROADCAST_HTTP_HEADERS` - a JSON value with custom headers you need to set for your HTTP webhook to be reached
 
+### Configurations for the `kafka` broadcast channel:
+In case you put `kafka` in your `EVENTS_BROADCAST_CHANNEL`, please configure thee following:
+
+* `BROADCAST_KAFKA_CLIENT_ID` - kafka producer client id. Default: `thau-api`
+* `BROADCAST_KAFKA_BROKERS` - **REQUIRED** comma separated list of kafka brokers
+* `BROADCAST_KAFKA_CONNECTION_TIMEOUT` - kafka connection timeout
+* `BROADCAST_KAFKA_REQUEST_TIMEOUT` - kafka request timeout
+* `BROADCAST_KAFKA_RETRY` - a JSON value for the [KafkaJS Retry configuration](https://kafka.js.org/docs/configuration#retry)
+* `BROADCAST_KAFKA_SASL` - a JSON value for the [KafkaJS SASL cconfiguration](https://kafka.js.org/docs/configuration#sasl)
 
 # Development
 
