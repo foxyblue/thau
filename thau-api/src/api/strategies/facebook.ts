@@ -43,7 +43,10 @@ const handleExchangeFacebookForToken = async (req: Request, res: Response) => {
     SUPPORTED_STRATEGIES.facebook
   )
 
-  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_FACEBOOK_AUTH_TOKEN_FOR_TOKEN, { user_id: user.id })
+  req.broadcast.publishEvent(
+    EVENT_TYPE.EXCHANGE_FACEBOOK_AUTH_TOKEN_FOR_TOKEN,
+    { user_id: user.id }
+  )
 
   return res.send({ token })
 }

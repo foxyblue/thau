@@ -54,7 +54,10 @@ const handleExchangeTokenForUser = async (req: Request, res: Response) => {
     throw new APIError('User not found', 401)
   }
   const provider = userTokenPair.strategy
-  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_TOKEN_FOR_USER, { provider, user_id: user.id })
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_TOKEN_FOR_USER, {
+    provider,
+    user_id: user.id,
+  })
   return res.send({ user, provider })
 }
 

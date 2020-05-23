@@ -41,7 +41,9 @@ const handleExchangeGoogleForToken = async (req: Request, res: Response) => {
     user.id,
     SUPPORTED_STRATEGIES.google
   )
-  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_GOOGLE_ID_TOKEN_FOR_TOKEN, { user_id: user.id })
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_GOOGLE_ID_TOKEN_FOR_TOKEN, {
+    user_id: user.id,
+  })
 
   return res.send({ token })
 }

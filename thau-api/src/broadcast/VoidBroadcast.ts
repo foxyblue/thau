@@ -1,4 +1,4 @@
-import ABroadcast, { EVENT_TYPE } from "./ABroadcast"
+import ABroadcast, { EVENT_TYPE } from './ABroadcast'
 
 export default class VoidBroadcast extends ABroadcast {
   public async validate(): Promise<void> {
@@ -9,5 +9,5 @@ export default class VoidBroadcast extends ABroadcast {
   }
   public async publishEvent(type: EVENT_TYPE, event: any): Promise<boolean> {
     return true
-  } 
+  }
 }

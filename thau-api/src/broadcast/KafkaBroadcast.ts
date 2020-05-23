@@ -1,9 +1,9 @@
 import { Kafka, Producer, SASLOptions, RetryOptions } from 'kafkajs'
-import ABroadcast from "./ABroadcast";
-import { ObjectId } from 'mongodb';
+import ABroadcast from './ABroadcast'
+import { ObjectId } from 'mongodb'
 
 export type KafkaBroadcastConfigs = {
-  topicName: string,
+  topicName: string
   clientId: string
   brokers: string[]
   connectionTimeout?: number
@@ -28,21 +28,26 @@ export default class KafkaBroadcast extends ABroadcast {
   public async connect(): Promise<void> {
     await this.producer.connect()
   }
-  public async publishEvent(type: import("./ABroadcast").EVENT_TYPE, event: any): Promise<boolean> {
+  public async publishEvent(
+    type: import('./ABroadcast').EVENT_TYPE,
+    event: any
+  ): Promise<boolean> {
     try {
       const id = new ObjectId()
       const records = await this.producer.send({
         topic: this.topicName,
-        messages: [{
-          key: `${type}|${id.toHexString()}`,
-          value: JSON.stringify(event),
-        }]
+        messages: [
+          {
+            key: `${type}|${id.toHexString()}`,
+            value: JSON.stringify(event),
+          },
+        ],
       })
       console.log(records)
     } catch (err) {
       console.error(err)
     }
-    
+
     return true
   }
 }

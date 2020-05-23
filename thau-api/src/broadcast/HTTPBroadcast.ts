@@ -1,5 +1,5 @@
 import supreagent, { SuperAgentStatic, Request } from 'superagent'
-import ABroadcast, { EVENT_TYPE } from "./ABroadcast"
+import ABroadcast, { EVENT_TYPE } from './ABroadcast'
 
 export type HTTPBroadcastConfigs = {
   url: string
@@ -30,15 +30,17 @@ export default class HTTPBroadcast extends ABroadcast {
   }
   public async publishEvent(type: EVENT_TYPE, event: any): Promise<boolean> {
     try {
-      await this.agent.post(this.url).send(JSON.stringify({
-        type,
-        event,
-      }))
+      await this.agent.post(this.url).send(
+        JSON.stringify({
+          type,
+          event,
+        })
+      )
       return true
     } catch (err) {
       console.warn(`Failed to broadcast ${type} event`)
       console.warn(err)
       return false
     }
-  } 
+  }
 }

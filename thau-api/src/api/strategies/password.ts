@@ -50,7 +50,9 @@ const handleExchangePasswordForToken = async (req: Request, res: Response) => {
     SUPPORTED_STRATEGIES.password
   )
 
-  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_PASSWORD_FOR_TOKEN, { user_id: credentials.user_id })
+  req.broadcast.publishEvent(EVENT_TYPE.EXCHANGE_PASSWORD_FOR_TOKEN, {
+    user_id: credentials.user_id,
+  })
 
   return res.send({ token })
 }

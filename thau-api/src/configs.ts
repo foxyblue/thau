@@ -12,8 +12,10 @@ const ENV = {
   BROADCAST_HTTP_HEADERS: process.env.BROADCAST_HTTP_HEADERS as string,
   BROADCAST_KAFKA_CLIENT_ID: process.env.BROADCAST_KAFKA_CLIENT_ID as string,
   BROADCAST_KAFKA_BROKERS: process.env.BROADCAST_KAFKA_BROKERS as string,
-  BROADCAST_KAFKA_CONNECTION_TIMEOUT:  process.env.BROADCAST_KAFKA_CONNECTION_TIMEOUT as string,
-  BROADCAST_KAFKA_REQUEST_TIMEOUT: process.env.BROADCAST_KAFKA_REQUEST_TIMEOUT as string,
+  BROADCAST_KAFKA_CONNECTION_TIMEOUT: process.env
+    .BROADCAST_KAFKA_CONNECTION_TIMEOUT as string,
+  BROADCAST_KAFKA_REQUEST_TIMEOUT: process.env
+    .BROADCAST_KAFKA_REQUEST_TIMEOUT as string,
   BROADCAST_KAFKA_RETRY: process.env.BROADCAST_KAFKA_RETRY as string,
   BROADCAST_KAFKA_SASL: process.env.BROADCAST_KAFKA_SASL as string,
   BROADCAST_KAFKA_TOPIC_NAME: process.env.BROADCAST_KAFKA_TOPIC_NAME as string,
@@ -42,7 +44,8 @@ const ENV = {
   SWAGGER: process.env.SWAGGER as string,
   TOKEN_LIFETIME: process.env.TOKEN_LIFETIME as string,
   USER_PROVIDERS_TABLE_NAME: process.env.USER_PROVIDERS_TABLE_NAME as string,
-  USER_TOKEN_PAIRS_TABLE_NAME: process.env.USER_TOKEN_PAIRS_TABLE_NAME as string,
+  USER_TOKEN_PAIRS_TABLE_NAME: process.env
+    .USER_TOKEN_PAIRS_TABLE_NAME as string,
   USERS_TABLE_NAME: process.env.USERS_TABLE_NAME as string,
 }
 
@@ -54,9 +57,9 @@ export type TableNamesConfig = {
 }
 
 export enum SUPPORTED_STORAGES {
-  postgres = "postgres",
-  mongo = "mongo",
-  sqlite = "sqlite"
+  postgres = 'postgres',
+  mongo = 'mongo',
+  sqlite = 'sqlite',
 }
 
 export type Configs = {
@@ -112,7 +115,7 @@ export const defaultConfigs: Configs = {
     host: '',
     port: 5432,
   },
-  broadcast: {}
+  broadcast: {},
 }
 
 const initSupportesStrategies = () => {
@@ -138,9 +141,7 @@ const initSupportesStrategies = () => {
 }
 
 const initGoogleStrategyParams = (supported_strategies: string[]) => {
-  if (
-    supported_strategies.indexOf(SUPPORTED_STRATEGIES.google) !== -1
-  ) {
+  if (supported_strategies.indexOf(SUPPORTED_STRATEGIES.google) !== -1) {
     const google = {
       clientId: ENV.GOOGLE_CLIENT_ID as string,
     }
@@ -156,9 +157,7 @@ const initGoogleStrategyParams = (supported_strategies: string[]) => {
 }
 
 const initFacebookStrategyParams = (supported_strategies: string[]) => {
-  if (
-    supported_strategies.indexOf(SUPPORTED_STRATEGIES.facebook) !== -1
-  ) {
+  if (supported_strategies.indexOf(SUPPORTED_STRATEGIES.facebook) !== -1) {
     const facebook = {
       clientId: ENV.FACEBOOK_CLIENT_ID as string,
       clientSecret: ENV.FACEBOOK_CLIENT_SECRET as string,
@@ -176,23 +175,17 @@ const initFacebookStrategyParams = (supported_strategies: string[]) => {
 }
 
 const initTableNames = (defaults: TableNamesConfig) => ({
-  users:
-    (ENV.USERS_TABLE_NAME as string) || defaults.users,
+  users: (ENV.USERS_TABLE_NAME as string) || defaults.users,
   userTokenPairs:
-    (ENV.USER_TOKEN_PAIRS_TABLE_NAME as string) ||
-    defaults.userTokenPairs,
-  credentials:
-    (ENV.CREDENTIALS_TABLE_NAME as string) ||
-    defaults.credentials,
+    (ENV.USER_TOKEN_PAIRS_TABLE_NAME as string) || defaults.userTokenPairs,
+  credentials: (ENV.CREDENTIALS_TABLE_NAME as string) || defaults.credentials,
   userProviders:
-    (ENV.USER_PROVIDERS_TABLE_NAME as string) ||
-    defaults.userProviders,
+    (ENV.USER_PROVIDERS_TABLE_NAME as string) || defaults.userProviders,
 })
 
 const initSQLiteParams = (defaults: SQLiteStorageConfigs) => {
   const sqlite = { ...defaults }
-  sqlite.filename =
-    (ENV.SQLITE_FILENAME as string) || defaults.filename
+  sqlite.filename = (ENV.SQLITE_FILENAME as string) || defaults.filename
   sqlite.mode = ENV.SQLITE_MODE
     ? parseInt(ENV.SQLITE_MODE as string, 10)
     : defaults.mode
@@ -237,15 +230,11 @@ const initPostgresParams = (defaults: PostgresStorageConfigs) => {
   postgres.port = ENV.PG_PORT
     ? parseInt(ENV.PG_PORT as string, 10)
     : postgres.port
-  postgres.user =
-    (ENV.PG_USER as string) || defaults.user
-  postgres.password =
-    (ENV.PG_PASSWORD as string) || defaults.password
-  postgres.database =
-    (ENV.PG_DATABASE as string) || defaults.database
+  postgres.user = (ENV.PG_USER as string) || defaults.user
+  postgres.password = (ENV.PG_PASSWORD as string) || defaults.password
+  postgres.database = (ENV.PG_DATABASE as string) || defaults.database
 
-  postgres.connectionTimeoutMillis = ENV
-    .PG_CONNECTION_TIMEOUT_MS
+  postgres.connectionTimeoutMillis = ENV.PG_CONNECTION_TIMEOUT_MS
     ? parseInt(ENV.PG_CONNECTION_TIMEOUT_MS as string, 10)
     : defaults.connectionTimeoutMillis
   postgres.idleTimeoutMillis = ENV.PG_IDLE_TIMEOUT_MS
@@ -283,11 +272,17 @@ const initKafkaBroadcastParams = () => {
   const kafka = {} as KafkaBroadcastConfigs
   kafka.clientId = ENV.BROADCAST_KAFKA_CLIENT_ID || 'thau-api'
   if (!ENV.BROADCAST_KAFKA_BROKERS) {
-    throw new Error('No BROADCAST_KAFKA_BROKERS provided when "kafka" broadcast channel is selected')
+    throw new Error(
+      'No BROADCAST_KAFKA_BROKERS provided when "kafka" broadcast channel is selected'
+    )
   }
   kafka.brokers = ENV.BROADCAST_KAFKA_BROKERS.split(',')
-  kafka.connectionTimeout = ENV.BROADCAST_KAFKA_CONNECTION_TIMEOUT ? parseInt(ENV.BROADCAST_KAFKA_CONNECTION_TIMEOUT as string, 10) : undefined
-  kafka.requestTimeout = ENV.BROADCAST_KAFKA_REQUEST_TIMEOUT ? parseInt(ENV.BROADCAST_KAFKA_REQUEST_TIMEOUT as string, 10) : undefined
+  kafka.connectionTimeout = ENV.BROADCAST_KAFKA_CONNECTION_TIMEOUT
+    ? parseInt(ENV.BROADCAST_KAFKA_CONNECTION_TIMEOUT as string, 10)
+    : undefined
+  kafka.requestTimeout = ENV.BROADCAST_KAFKA_REQUEST_TIMEOUT
+    ? parseInt(ENV.BROADCAST_KAFKA_REQUEST_TIMEOUT as string, 10)
+    : undefined
   if (ENV.BROADCAST_KAFKA_RETRY) {
     try {
       kafka.retry = JSON.parse(ENV.BROADCAST_KAFKA_RETRY)
@@ -326,7 +321,9 @@ const initConfigs = () => {
 
   configs.supported_strategies = initSupportesStrategies()
   configs.google = initGoogleStrategyParams(defaultConfigs.supported_strategies)
-  configs.facebook = initFacebookStrategyParams(defaultConfigs.supported_strategies)
+  configs.facebook = initFacebookStrategyParams(
+    defaultConfigs.supported_strategies
+  )
   configs.table_names = initTableNames(defaultConfigs.table_names)
 
   switch (configs.data_backend) {
@@ -349,12 +346,13 @@ const initConfigs = () => {
     switch (configs.eventsBroadcastChannel) {
       case 'http': {
         configs.broadcast.http = initHTTPBroadcastParams()
-        break;
+        break
       }
       case 'kafka': {
         configs.broadcast.kafka = initKafkaBroadcastParams()
-        configs.broadcast.kafka.topicName = ENV.BROADCAST_KAFKA_TOPIC_NAME || 'thau-kafka-broadcast'
-        break;
+        configs.broadcast.kafka.topicName =
+          ENV.BROADCAST_KAFKA_TOPIC_NAME || 'thau-kafka-broadcast'
+        break
       }
     }
   }

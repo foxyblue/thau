@@ -88,7 +88,9 @@ const handleCreateUser = async (req: Request, res: Response) => {
     SUPPORTED_STRATEGIES.password
   )
 
-  req.broadcast.publishEvent(EVENT_TYPE.CREATE_NEW_USER_WITH_PASSWORD, { user_id: user.id })
+  req.broadcast.publishEvent(EVENT_TYPE.CREATE_NEW_USER_WITH_PASSWORD, {
+    user_id: user.id,
+  })
   return res.send({ token })
 }
 
