@@ -5,7 +5,7 @@
 
 Ready-to-use authentication service for your application. With a React connector.
 
-- [Swagger](https://thau.quester-app.dev/api-docs)
+- [Swagger](https://thau.quester-app.dev/api/v1/docs)
 - [React integration documentation and examples](https://github.com/MGrin/thau/tree/master/react-thau)
 
 # Motivation

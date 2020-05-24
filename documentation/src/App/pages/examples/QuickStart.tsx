@@ -170,7 +170,7 @@ const App = () => {
 }
 
 export default () => (
-  <AuthProvider authUrl="https://thau.quester-app.dev">
+  <AuthProvider authUrl="https://thau.quester-app.dev/api/v1">
     <App />
   </AuthProvider>
 )
@@ -190,7 +190,7 @@ import {
 } from 'react-thau'
 
 export default () => (
-  <AuthProvider authUrl="https://thau.quester-app.dev">
+  <AuthProvider authUrl="https://thau.quester-app.dev/api/v1">
     <App />
   </AuthProvider>
 )

@@ -41,11 +41,11 @@ const main = async () => {
   app.use(cors())
   app.use(express.json())
 
-  app.use('/tokens', TokensAPI)
-  app.use('/users', UsersAPI)
-  app.use('/configs', ConfigsAPI)
+  app.use('/api/v1/tokens', TokensAPI)
+  app.use('/api/v1/users', UsersAPI)
+  app.use('/api/v1/configs', ConfigsAPI)
 
-  app.get('/heartbeat', (req, res) => {
+  app.get('/api/v1/heartbeat', (req, res) => {
     res.send({
       service: 'thau',
       data_backend: configs.data_backend,
@@ -57,7 +57,7 @@ const main = async () => {
 
   if (configs.swagger) {
     app.use(
-      '/api-docs',
+      '/api/v1/docs',
       swaggerUi.serve,
       swaggerUi.setup(generateSwaggerDocumentation(configs))
     )

@@ -9,7 +9,7 @@ export default () => (
     <Display>
       <ButtonGroup>
         <Button icon={<Codesandbox />} auto>
-          <Link href="https://thau.quester-app.dev/api-docs" target="_blank">
+          <Link href="https://thau.quester-app.dev/api/v1/docs" target="_blank">
             Swagger
           </Link>
         </Button>
