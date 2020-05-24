@@ -191,7 +191,7 @@ const AuthProvider: React.FunctionComponent<AuthProviderProps> = ({
       dispatch,
       fetchOptions
     )
-  }, [authUrl, initialFetch, tokenStorage, fetchOptions])
+  }, [authUrl, tokenStorage, fetchOptions])
   React.useEffect(() => {
     if (state.google && !document.querySelector('#gapi-loader')) {
       const script = document.createElement('script')
