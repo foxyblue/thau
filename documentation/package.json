@@ -1,0 +1,62 @@
+{
+  "name": "documentation",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@zeit-ui/react": "^1.6.0-canary.1",
+    "@zeit-ui/react-icons": "^1.2.2",
+    "js-cookie": "^2.2.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "react-syntax-highlighter": "^12.2.1",
+    "styled-components": "^5.1.0",
+    "typescript": "~3.7.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "tslint --project tsconfig.json",
+    "prettier:check": "prettier --parser typescript --single-quote --list-different \"src/**/*.ts\"",
+    "prettier:write": "prettier --parser typescript --single-quote --write \"src/**/*.ts\""
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/js-cookie": "^2.2.6",
+    "@types/react-syntax-highlighter": "^11.0.4",
+    "@types/styled-components": "^5.1.0",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "ts-node-dev": "^1.0.0-pre.44",
+    "tslint": "^6.1.2",
+    "tslint-config-prettier": "^1.18.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn run prettier:write"
+    }
+  }
+}

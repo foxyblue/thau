@@ -1,5 +1,5 @@
 # Thau
-<img src="https://github.com/MGrin/thau/raw/master/thau.png" width="250" />
+![alt text](https://storage.googleapis.com/thau/logo/facebook_cover_photo_2.png)
 
 [Medium article](https://medium.com/@mgrin/thau-an-ultimate-authentication-service-with-react-connector-1412dcaa835e?source=friends_link&sk=d802e4eb4b78d3213af2f09b6c5c8eec)
 
@@ -44,5 +44,5 @@ In order to start the `thau-api` service, you have to provide a list of configur
 docker run -e ENABLED_STRATEGIES=password -e ENV=local -e DATA_BACKEND=sqlite mgrin/thau
 ```
 
-Please see related documentations for more information, or the `examples` folder where you can find examples of appliciations
+Please see related documentations for more information
 
