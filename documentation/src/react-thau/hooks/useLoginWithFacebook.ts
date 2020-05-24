@@ -129,7 +129,7 @@ const useLoginWithFacebook: (
       dispatch({ type: 'FACEBOOK_API_INIT_START' })
       setTimeout(initFacebookAPI(auth, dispatch), 50)
     }
-  }, [auth])
+  }, [auth, state])
 
   const continueLoginFlowWithFacecbookUser = async (facebookUser: any) => {
     const data = {

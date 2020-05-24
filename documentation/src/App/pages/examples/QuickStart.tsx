@@ -10,7 +10,7 @@ import {
 } from '../../../react-thau'
 
 const NewUserForm = () => {
-  const [{ loading, error, token }, createNewUser] = useCreateUserWithPassword()
+  const [{ loading, error }, createNewUser] = useCreateUserWithPassword()
 
   const [newUserState, setNewUserState] = React.useState<any>({})
   const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +82,7 @@ const NewUserForm = () => {
 }
 
 const LoginForm = () => {
-  const [{ loading, error, token }, login] = useLoginWithPassword()
+  const [{ loading, error }, login] = useLoginWithPassword()
   const [loginState, setLoginState] = React.useState<any>({})
   const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginState({
@@ -242,7 +242,7 @@ const App = () => {
 }
 
 const NewUserForm = () => {
-  const [{ loading, error, token }, createNewUser] = useCreateUserWithPassword()
+  const [{ loading, error }, createNewUser] = useCreateUserWithPassword()
 
   const [newUserState, setNewUserState] = React.useState<any>({})
   const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -314,7 +314,7 @@ const NewUserForm = () => {
 }
 
 const LoginForm = () => {
-  const [{ loading, error, token }, login] = useLoginWithPassword()
+  const [{ loading, error }, login] = useLoginWithPassword()
   const [loginState, setLoginState] = React.useState<any>({})
   const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLoginState({
