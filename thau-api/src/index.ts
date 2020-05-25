@@ -49,7 +49,7 @@ const main = async () => {
     res.send({
       service: 'thau',
       data_backend: configs.data_backend,
-      eventsBroadcastChannel: configs.events_broadcast_channel,
+      events_broadcast_channel: configs.events_broadcast_channel,
       supported_strattegies: configs.supported_strategies,
       status: 'OK',
     })
