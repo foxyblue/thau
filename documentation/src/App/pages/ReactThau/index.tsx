@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, Code, Link, Spacer, Image } from '@zeit-ui/react'
+import { Text, Code, Link, Spacer } from '@zeit-ui/react'
 import Section from '../../Section'
 
 export default () => (

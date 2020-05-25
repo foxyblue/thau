@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, Code, Link, Spacer, Dot } from '@zeit-ui/react'
+import { Text, Code, Link, Spacer } from '@zeit-ui/react'
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { githubGist } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import Section from '../../Section'
