@@ -18,7 +18,7 @@ export default class KafkaBroadcast extends ABroadcast {
 
   public constructor({ topicName, ...configs }: KafkaBroadcastConfigs) {
     super()
-    this.topicName = topicName
+    this.topicName = topicName || 'thau-events'
     this.client = new Kafka(configs)
     this.producer = this.client.producer()
   }

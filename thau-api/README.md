@@ -4,7 +4,7 @@
 
 **Thau** API can be configured using ENV variables. 
 
-**Thau** API is documeneted with [swagger](https://thau.quester-app.dev/api-docs) (pass `SWAGGER=1` as environment variable to see it at `/api-docs`)
+**Thau** API is documeneted with [swagger](https://thau.quester-app.dev/api/v1/docs) (pass `SWAGGER=1` as environment variable to see it at `/api/v1/docs`)
 
 **Thau** API can broadcast events outsidee through different broadcasting channels. Currently sUpported channels: `http(s)` webhooks, `kafka` topic
 
@@ -146,7 +146,7 @@ The config file should havee the following structure:
     graphVersion: string
   }
 
-  eventsBroadcastChannel?: SUPPORTED_BROADCAST
+  events_broadcast_channel?: SUPPORTED_BROADCAST
   broadcast: {
     http?: HTTPBroadcastConfigs
     kafka?: KafkaBroadcastConfigs

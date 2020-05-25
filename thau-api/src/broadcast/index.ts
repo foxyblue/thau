@@ -6,7 +6,7 @@ import KafkaBroadcast, { KafkaBroadcastConfigs } from './KafkaBroadcast'
 export const initBroadcasting = async (configs: Configs) => {
   let broadcast
 
-  switch (configs.eventsBroadcastChannel) {
+  switch (configs.events_broadcast_channel) {
     case 'http': {
       broadcast = new HTTPBroadcast(
         configs.broadcast.http as HTTPBroadcastConfigs

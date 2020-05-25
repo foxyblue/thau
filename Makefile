@@ -14,6 +14,7 @@ format:
 	cd thau-api && yarn prettier:write && yarn lint
 	cd react-thau && yarn prettier:write && yarn lint
 	cd tests && yarn prettier:write && yarn lint
+	cd documentation && yarn prettier:write && yarn lint
 
 test: dev
 	sleep 5
