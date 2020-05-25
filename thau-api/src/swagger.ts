@@ -15,10 +15,12 @@ export default (configs: Configs) => ({
       name: pkg.license,
     },
   },
-  servers: [{
-    name: 'thau.quester-app.dev',
-    url: 'https://thau.quester-app.dev/api/v1'
-  }],
+  servers: [
+    {
+      name: 'thau.quester-app.dev',
+      url: 'https://thau.quester-app.dev/api/v1',
+    },
+  ],
   paths: {
     '/heartbeat': {
       get: {
