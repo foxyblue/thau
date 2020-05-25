@@ -43,6 +43,7 @@ export default class SQLiteStorage extends AStorage<number> {
 
   public async validate(): Promise<void> {
     const db = this.client as sqlite3.Database
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       const cb = (step: number) => (err: Error | null) => {
         if (err) {
@@ -53,7 +54,6 @@ export default class SQLiteStorage extends AStorage<number> {
           return resolve()
         }
       }
-      const { tableNames } = this
       db.serialize(() => {
         db.run(`SELECT * FROM ${tableNames.users}`, cb(1))
         db.run(`SELECT * FROM ${tableNames.userTokenPairs}`, cb(2))
@@ -277,8 +277,8 @@ export default class SQLiteStorage extends AStorage<number> {
     })
   }
   public getUserById(userId: number): Promise<User<number>> {
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
-      const { tableNames } = this
       const db = this.client as sqlite3.Database
       db.get(
         `
@@ -295,8 +295,8 @@ export default class SQLiteStorage extends AStorage<number> {
     })
   }
   public getUserByEmail(email: string): Promise<User<number>> {
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
-      const { tableNames } = this
       const db = this.client as sqlite3.Database
       db.get(
         `
@@ -318,9 +318,9 @@ export default class SQLiteStorage extends AStorage<number> {
     provider: SUPPORTED_STRATEGIES,
     providerData: any
   ): Promise<User<number>> {
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       const db = this.client as sqlite3.Database
-      const { tableNames } = this
       db.run(
         `
         INSERT INTO ${tableNames.userProviders} (
@@ -354,9 +354,9 @@ export default class SQLiteStorage extends AStorage<number> {
   }
 
   public revokeToken(token: string): Promise<void> {
+    const { tableNames } = this
     return new Promise((resolve, reject) => {
       const db = this.client as sqlite3.Database
-      const { tableNames } = this
       db.run(
         `
         UPDATE ${tableNames.userTokenPairs}
