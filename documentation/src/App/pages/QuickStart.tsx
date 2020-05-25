@@ -31,7 +31,7 @@ export default () => (
       The command above will start the <b>Thau</b> service on port <Code>9000</Code>.
     </Text>
     <Text>
-      You can go to <Code><Link color href="http://localhost:9000/api-docs" target="_blank">http://localhost:9000/api-docs</Link></Code> to see the Swagger documentation.
+      You can go to <Code><Link color href="http://localhost:9000/api/v1/docs" target="_blank">http://localhost:9000/api/v1/docs</Link></Code> to see the Swagger documentation.
     </Text>
     <Note>
       We pass some environment variables to <Code>docker run</Code> command.
