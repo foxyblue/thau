@@ -24,7 +24,7 @@ export default (ref: any, rootMargin: string = '0px') => {
     return () => {
       observer.unobserve(current)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Empty array ensures that effect is only run on mount and unmount
 
   return isIntersecting
