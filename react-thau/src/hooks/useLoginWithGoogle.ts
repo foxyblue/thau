@@ -147,7 +147,7 @@ const useLoginWithGoogle: (
       dispatch({ type: 'GAPI_INIT_START' })
       setTimeout(initGAPI(auth, dispatch), 50)
     }
-  }, [auth])
+  }, [auth, state])
 
   const continueLoginFlowWithGoogleUser = async (googleUser: any) => {
     const data = {

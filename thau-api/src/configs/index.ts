@@ -44,7 +44,7 @@ export type Configs = {
     graphVersion: string
   }
 
-  eventsBroadcastChannel?: SUPPORTED_BROADCAST
+  events_broadcast_channel?: SUPPORTED_BROADCAST
   broadcast: {
     http?: HTTPBroadcastConfigs
     kafka?: KafkaBroadcastConfigs

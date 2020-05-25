@@ -13,12 +13,14 @@ export type CreateUserWithPasswordState = {
   loading: boolean
   error: APIError | null
   token: string | null
+  user: User | null
 }
 
 const initialState = {
   loading: false,
   error: null,
   token: null,
+  user: null,
 }
 
 const createUserWithPassword = async (

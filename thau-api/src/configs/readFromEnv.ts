@@ -254,7 +254,7 @@ const readConfigFromEnv = () => {
     ? parseInt(ENV.TOKEN_LIFETIME as string, 10)
     : defaultConfigs.token_lifetime
   configs.data_backend = ENV.DATA_BACKEND as SUPPORTED_STORAGES
-  configs.eventsBroadcastChannel = ENV.EVENTS_BROADCAST_CHANNEL as SUPPORTED_BROADCAST
+  configs.events_broadcast_channel = ENV.EVENTS_BROADCAST_CHANNEL as SUPPORTED_BROADCAST
 
   configs.supported_strategies = initSupportesStrategies()
   configs.google = initGoogleStrategyParams(defaultConfigs.supported_strategies)
@@ -278,9 +278,9 @@ const readConfigFromEnv = () => {
     }
   }
 
-  if (configs.eventsBroadcastChannel) {
+  if (configs.events_broadcast_channel) {
     configs.broadcast = {}
-    switch (configs.eventsBroadcastChannel) {
+    switch (configs.events_broadcast_channel) {
       case 'http': {
         configs.broadcast.http = initHTTPBroadcastParams()
         break
