@@ -24,7 +24,7 @@ const NewUserForm = () => {
     <>
       <Row>
         <Input
-          placeholder="Email (required))"
+          placeholder="Email (required)"
           type="email"
           name="email"
           onChange={onFormChange}
@@ -33,7 +33,7 @@ const NewUserForm = () => {
       <Spacer />
       <Row>
         <Input
-          placeholder="Password (required))"
+          placeholder="Password (required)"
           type="password"
           name="password"
           onChange={onFormChange}
@@ -95,7 +95,7 @@ const LoginForm = () => {
     <>
       <Row>
         <Input
-          placeholder="Email (required))"
+          placeholder="Email (required)"
           type="email"
           name="email"
           onChange={onFormChange}
@@ -104,7 +104,7 @@ const LoginForm = () => {
       <Spacer />
       <Row>
         <Input
-          placeholder="Password (required))"
+          placeholder="Password (required)"
           type="password"
           name="password"
           onChange={onFormChange}
@@ -224,7 +224,7 @@ const App = () => {
               <Text type="error">{errorLogout.message}</Text>
             )}
           </Row>
-          
+
         </>
       )}
       {!user && (
@@ -256,7 +256,7 @@ const NewUserForm = () => {
     <>
       <Row>
         <Input
-          placeholder="Email (required))"
+          placeholder="Email (required)"
           type="email"
           name="email"
           onChange={onFormChange}
@@ -265,7 +265,7 @@ const NewUserForm = () => {
       <Spacer />
       <Row>
         <Input
-          placeholder="Password (required))"
+          placeholder="Password (required)"
           type="password"
           name="password"
           onChange={onFormChange}
@@ -327,7 +327,7 @@ const LoginForm = () => {
     <>
       <Row>
         <Input
-          placeholder="Email (required))"
+          placeholder="Email (required)"
           type="email"
           name="email"
           onChange={onFormChange}
@@ -336,7 +336,7 @@ const LoginForm = () => {
       <Spacer />
       <Row>
         <Input
-          placeholder="Password (required))"
+          placeholder="Password (required)"
           type="password"
           name="password"
           onChange={onFormChange}

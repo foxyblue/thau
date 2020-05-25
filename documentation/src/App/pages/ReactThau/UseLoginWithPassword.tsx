@@ -24,7 +24,7 @@ export default () => (
     <>
       <Row>
         <Input
-          placeholder="Email (required))"
+          placeholder="Email (required)"
           type="email"
           name="email"
           onChange={onFormChange}
@@ -33,7 +33,7 @@ export default () => (
       <Spacer />
       <Row>
         <Input
-          placeholder="Password (required))"
+          placeholder="Password (required)"
           type="password"
           name="password"
           onChange={onFormChange}
